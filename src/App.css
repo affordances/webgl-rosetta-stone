@@ -5,22 +5,33 @@
   padding: 0;
 }
 
-.comparison {
+.container {
   display: flex;
   padding: 16px;
+  height: 100%;
+  width: 100%;
+}
 
-  .example {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
+table {
+  border-collapse: collapse;
+}
 
-    .label {
-      text-align: center;
-    }
+th,
+td {
+  border: 1px solid black;
+}
 
-    .three {
-      height: 150px;
-      width: 300px;
-    }
-  }
+th {
+  height: 32px;
+  width: 300px;
+}
+
+td {
+  height: 150px;
+  width: 300px;
+}
+
+.three {
+  height: 100%;
+  width: 100%;
 }

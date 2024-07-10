@@ -4,63 +4,8 @@ import {
   vertexShaderSource,
   fragmentShaderSource,
   vertices,
-} from "../constants";
-
-type ShaderSourceType =
-  | WebGLRenderingContextBase["VERTEX_SHADER"]
-  | WebGLRenderingContextBase["FRAGMENT_SHADER"];
-
-function createShader(
-  gl: WebGLRenderingContext,
-  type: ShaderSourceType,
-  source: string
-) {
-  if (!gl) {
-    return;
-  }
-
-  const shader = gl.createShader(type);
-
-  if (!shader) {
-    return;
-  }
-
-  gl.shaderSource(shader, source);
-  gl.compileShader(shader);
-
-  const success = gl.getShaderParameter(shader, gl.COMPILE_STATUS);
-
-  if (success) {
-    return shader;
-  }
-
-  console.log(gl.getShaderInfoLog(shader));
-  gl.deleteShader(shader);
-}
-
-function createProgram(
-  gl: WebGLRenderingContext,
-  vertexShader: WebGLShader,
-  fragmentShader: WebGLShader
-) {
-  const program = gl.createProgram();
-  if (!program) {
-    return;
-  }
-
-  gl.attachShader(program, vertexShader);
-  gl.attachShader(program, fragmentShader);
-  gl.linkProgram(program);
-
-  const success = gl.getProgramParameter(program, gl.LINK_STATUS);
-
-  if (success) {
-    return program;
-  }
-
-  console.log(gl.getProgramInfoLog(program));
-  gl.deleteProgram(program);
-}
+} from "./constants";
+import { createProgram, createShader, resizePixelRatio } from "../../helpers";
 
 export const WebGLMain = (canvas: HTMLCanvasElement) => {
   const gl = canvas.getContext("webgl");
@@ -69,13 +14,7 @@ export const WebGLMain = (canvas: HTMLCanvasElement) => {
     return;
   }
 
-  const devicePixelRatio = window.devicePixelRatio || 1;
-
-  canvas.width = 300 * devicePixelRatio;
-  canvas.height = 150 * devicePixelRatio;
-
-  canvas.style.width = 300 + "px";
-  canvas.style.height = 150 + "px";
+  resizePixelRatio(canvas);
 
   // create GLSL shaders, upload the GLSL source, compile the shaders
   const vertexShader = createShader(gl, gl.VERTEX_SHADER, vertexShaderSource);
@@ -113,8 +52,6 @@ export const WebGLMain = (canvas: HTMLCanvasElement) => {
 
   // code above this line is initialization code.
   // code below this line is rendering code.
-
-  //   webglUtils.resizeCanvasToDisplaySize(gl.canvas);
 
   // Tell WebGL how to convert from clip space to pixels
   gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
@@ -155,7 +92,7 @@ export const WebGLMain = (canvas: HTMLCanvasElement) => {
   gl.drawArrays(primitiveType, offset, count);
 };
 
-export const WebGLExample = () => {
+export const WebGLCustomShaderExample = () => {
   const ref = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {

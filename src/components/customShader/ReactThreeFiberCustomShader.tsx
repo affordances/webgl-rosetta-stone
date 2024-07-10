@@ -6,7 +6,7 @@ import {
   fragmentShaderSource,
   vertexShaderSource,
   vertices,
-} from "../constants";
+} from "./constants";
 
 class CustomShader extends THREE.RawShaderMaterial {
   constructor() {
@@ -22,7 +22,7 @@ class CustomShader extends THREE.RawShaderMaterial {
 extend({ CustomShader });
 export { CustomShader };
 
-export const ReactThreeFiberExample = () => {
+export const ReactThreeFiberCustomShaderExample = () => {
   const meshRef = useRef<THREE.Mesh>(null);
   const materialRef = useRef<THREE.RawShaderMaterial>(null);
 

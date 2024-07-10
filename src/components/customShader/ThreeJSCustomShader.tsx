@@ -5,9 +5,9 @@ import {
   fragmentShaderSource,
   vertexShaderSource,
   vertices,
-} from "../constants";
+} from "./constants";
 
-export const ThreeJSExample = () => {
+export const ThreeJSCustomShaderExample = () => {
   const mountRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
