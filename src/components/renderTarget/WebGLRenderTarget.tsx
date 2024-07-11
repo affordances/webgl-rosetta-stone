@@ -208,38 +208,36 @@ const WebGLMain = (canvas: HTMLCanvasElement) => {
   const texture = gl.createTexture();
   gl.bindTexture(gl.TEXTURE_2D, texture);
 
-  {
-    // fill texture with 3x2 pixels
-    const level = 0;
-    const internalFormat = gl.LUMINANCE;
-    const width = 3;
-    const height = 2;
-    const border = 0;
-    const format = gl.LUMINANCE;
-    const type = gl.UNSIGNED_BYTE;
-    const data = new Uint8Array([128, 64, 128, 0, 192, 0]);
-    const alignment = 1;
+  // fill texture with 3x2 pixels
+  const pixLevel = 0;
+  const pixInternalFormat = gl.LUMINANCE;
+  const pixWidth = 3;
+  const pixHeight = 2;
+  const pixBorder = 0;
+  const pixFormat = gl.LUMINANCE;
+  const pixType = gl.UNSIGNED_BYTE;
+  const pixData = new Uint8Array([128, 64, 128, 0, 192, 0]);
+  const pixAlignment = 1;
 
-    gl.pixelStorei(gl.UNPACK_ALIGNMENT, alignment);
+  gl.pixelStorei(gl.UNPACK_ALIGNMENT, pixAlignment);
 
-    gl.texImage2D(
-      gl.TEXTURE_2D,
-      level,
-      internalFormat,
-      width,
-      height,
-      border,
-      format,
-      type,
-      data
-    );
+  gl.texImage2D(
+    gl.TEXTURE_2D,
+    pixLevel,
+    pixInternalFormat,
+    pixWidth,
+    pixHeight,
+    pixBorder,
+    pixFormat,
+    pixType,
+    pixData
+  );
 
-    // set the filtering so we don't need mips and it's not filtered
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
-  }
+  // set the filtering so we don't need mips and it's not filtered
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
 
   // Create a texture to render to
   const targetTextureWidth = 256;
@@ -247,32 +245,30 @@ const WebGLMain = (canvas: HTMLCanvasElement) => {
   const targetTexture = gl.createTexture();
   gl.bindTexture(gl.TEXTURE_2D, targetTexture);
 
-  {
-    // define size and format of level 0
-    const level = 0;
-    const internalFormat = gl.RGBA;
-    const border = 0;
-    const format = gl.RGBA;
-    const type = gl.UNSIGNED_BYTE;
-    const data = null;
+  // define size and format of level 0
+  const level = 0;
+  const internalFormat = gl.RGBA;
+  const border = 0;
+  const format = gl.RGBA;
+  const type = gl.UNSIGNED_BYTE;
+  const data = null;
 
-    gl.texImage2D(
-      gl.TEXTURE_2D,
-      level,
-      internalFormat,
-      targetTextureWidth,
-      targetTextureHeight,
-      border,
-      format,
-      type,
-      data
-    );
+  gl.texImage2D(
+    gl.TEXTURE_2D,
+    level,
+    internalFormat,
+    targetTextureWidth,
+    targetTextureHeight,
+    border,
+    format,
+    type,
+    data
+  );
 
-    // set the filtering so we don't need mips
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
-  }
+  // set the filtering so we don't need mips
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
 
   // Create and bind the framebuffer
   const fb = gl.createFramebuffer();
@@ -280,13 +276,13 @@ const WebGLMain = (canvas: HTMLCanvasElement) => {
 
   // attach the texture as the first color attachment
   const attachmentPoint = gl.COLOR_ATTACHMENT0;
-  const level = 0;
+  const _level = 0;
   gl.framebufferTexture2D(
     gl.FRAMEBUFFER,
     attachmentPoint,
     gl.TEXTURE_2D,
     targetTexture,
-    level
+    _level
   );
 
   const fieldOfViewRadians = degToRad(60);
@@ -318,85 +314,79 @@ const WebGLMain = (canvas: HTMLCanvasElement) => {
     gl.enable(gl.CULL_FACE);
     gl.enable(gl.DEPTH_TEST);
 
-    {
-      // render to our targetTexture by binding the framebuffer
-      gl.bindFramebuffer(gl.FRAMEBUFFER, fb);
+    // render to our targetTexture by binding the framebuffer
+    gl.bindFramebuffer(gl.FRAMEBUFFER, fb);
 
-      // render cube with our 3x2 texture
-      gl.bindTexture(gl.TEXTURE_2D, texture);
+    // render cube with our 3x2 texture
+    gl.bindTexture(gl.TEXTURE_2D, texture);
 
-      // Tell WebGL how to convert from clip space to pixels
-      gl.viewport(0, 0, targetTextureWidth, targetTextureHeight);
+    // Tell WebGL how to convert from clip space to pixels
+    gl.viewport(0, 0, targetTextureWidth, targetTextureHeight);
 
-      // Clear the attachment(s).
-      gl.clearColor(0, 0, 1, 1); // clear to blue
-      gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+    // Clear the attachment(s).
+    gl.clearColor(0, 0, 1, 1); // clear to blue
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
-      const aspect = targetTextureWidth / targetTextureHeight;
+    let aspect = targetTextureWidth / targetTextureHeight;
 
-      if (
-        !matrixLocation ||
-        !positionBuffer ||
-        !program ||
-        !texcoordBuffer ||
-        !textureLocation
-      ) {
-        return;
-      }
-
-      drawCube({
-        aspect,
-        fieldOfViewRadians,
-        gl,
-        matrixLocation,
-        modelXRotationRadians,
-        modelYRotationRadians,
-        positionBuffer,
-        positionLocation,
-        program,
-        texcoordBuffer,
-        texcoordLocation,
-        textureLocation,
-      });
+    if (
+      !matrixLocation ||
+      !positionBuffer ||
+      !program ||
+      !texcoordBuffer ||
+      !textureLocation
+    ) {
+      return;
     }
 
-    {
-      // render to the canvas
-      gl.bindFramebuffer(gl.FRAMEBUFFER, null);
+    drawCube({
+      aspect,
+      fieldOfViewRadians,
+      gl,
+      matrixLocation,
+      modelXRotationRadians,
+      modelYRotationRadians,
+      positionBuffer,
+      positionLocation,
+      program,
+      texcoordBuffer,
+      texcoordLocation,
+      textureLocation,
+    });
 
-      // render the cube with the texture we just rendered to
-      gl.bindTexture(gl.TEXTURE_2D, targetTexture);
+    // render to the canvas
+    gl.bindFramebuffer(gl.FRAMEBUFFER, null);
 
-      // Tell WebGL how to convert from clip space to pixels
-      gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
+    // render the cube with the texture we just rendered to
+    gl.bindTexture(gl.TEXTURE_2D, targetTexture);
 
-      // Clear the canvas AND the depth buffer.
-      gl.clearColor(1, 1, 1, 1); // clear to white
-      gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+    // Tell WebGL how to convert from clip space to pixels
+    gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
 
-      let aspect;
+    // Clear the canvas AND the depth buffer.
+    gl.clearColor(1, 1, 1, 1); // clear to white
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
-      if ("clientWidth" in gl.canvas && "clientHeight" in gl.canvas) {
-        aspect = gl.canvas.clientWidth / gl.canvas.clientHeight;
-      } else {
-        return;
-      }
-
-      drawCube({
-        aspect,
-        fieldOfViewRadians,
-        gl,
-        matrixLocation,
-        modelXRotationRadians,
-        modelYRotationRadians,
-        positionBuffer,
-        positionLocation,
-        program,
-        texcoordBuffer,
-        texcoordLocation,
-        textureLocation,
-      });
+    if ("clientWidth" in gl.canvas && "clientHeight" in gl.canvas) {
+      aspect = gl.canvas.clientWidth / gl.canvas.clientHeight;
+    } else {
+      return;
     }
+
+    drawCube({
+      aspect,
+      fieldOfViewRadians,
+      gl,
+      matrixLocation,
+      modelXRotationRadians,
+      modelYRotationRadians,
+      positionBuffer,
+      positionLocation,
+      program,
+      texcoordBuffer,
+      texcoordLocation,
+      textureLocation,
+    });
 
     requestAnimationFrame(drawScene);
   }
