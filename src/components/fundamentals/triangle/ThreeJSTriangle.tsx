@@ -7,7 +7,7 @@ import {
   vertices,
 } from "./constants";
 
-export const ThreeJSCustomShaderExample = () => {
+export const ThreeJSTriangleExample = () => {
   const mountRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -39,7 +39,7 @@ export const ThreeJSCustomShaderExample = () => {
       vertexShader: vertexShaderSource,
       fragmentShader: fragmentShaderSource,
       // so it's not necessary to flip the first and second position coords
-      side: THREE.FrontSide,
+      side: THREE.BackSide,
     });
 
     const mesh = new THREE.Mesh(geometry, material);

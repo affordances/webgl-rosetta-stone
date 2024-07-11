@@ -1,9 +1,11 @@
 import "./App.css";
 
-import { WebGLCustomShaderExample } from "./components/customShader/WebGLCustomShader";
-import { ThreeJSCustomShaderExample } from "./components/customShader/ThreeJSCustomShader";
-import { ReactThreeFiberCustomShaderExample } from "./components/customShader/ReactThreeFiberCustomShader";
-import { WebGLRenderTargetExample } from "./components/renderTarget/WebGLRenderTarget";
+import { WebGLTriangleExample } from "./components/fundamentals/triangle/WebGLTriangle";
+import { ThreeJSTriangleExample } from "./components/fundamentals/triangle/ThreeJSTriangle";
+import { ReactThreeFiberTriangleExample } from "./components/fundamentals/triangle/ReactThreeFiberTriangle";
+import { WebGLPixelPositioningExample } from "./components/fundamentals/pixelPositioning/WebGLPixelPositioning";
+import { ThreeJSPixelPositioningExample } from "./components/fundamentals/pixelPositioning/ThreeJSPixelPositioning";
+import { ReactThreeFiberPixelPositioningExample } from "./components/fundamentals/pixelPositioning/ReactThreeFiberPixelPositioning";
 
 function App() {
   return (
@@ -17,28 +19,28 @@ function App() {
             <th scope="col">react-three-fiber</th>
           </tr>
           <tr>
-            <th scope="row">custom shader</th>
+            <th scope="row">triangle</th>
             <td>
-              <WebGLCustomShaderExample />
+              <WebGLTriangleExample />
             </td>
             <td>
-              <ThreeJSCustomShaderExample />
+              <ThreeJSTriangleExample />
             </td>
             <td>
-              <ReactThreeFiberCustomShaderExample />
+              <ReactThreeFiberTriangleExample />
             </td>
           </tr>
           <tr>
-            <th scope="row">render target</th>
+            <th scope="row">pixel positioning</th>
             <td>
-              <WebGLRenderTargetExample />
+              <WebGLPixelPositioningExample />
             </td>
-            {/* <td>
-            <ThreeJSExample />
-          </td>
-          <td>
-            <ReactThreeFiberExample />
-          </td> */}
+            <td>
+              <ThreeJSPixelPositioningExample />
+            </td>
+            <td>
+              <ReactThreeFiberPixelPositioningExample />
+            </td>
           </tr>
         </tbody>
       </table>

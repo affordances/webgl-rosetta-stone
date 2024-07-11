@@ -1,4 +1,17 @@
+import { exampleDimensions } from "./constants";
 import { ShaderSourceType } from "./types";
+
+export const insertEveryNth = <T>(array: Array<T>, n: number, value: T) => {
+  return array.reduce((acc: T[], current: T, index: number) => {
+    acc.push(current);
+
+    if ((index + 1) % n === 0) {
+      acc.push(value);
+    }
+
+    return acc;
+  }, []);
+};
 
 export const createProgram = (
   gl: WebGLRenderingContext,
@@ -59,9 +72,9 @@ export const degToRad = (d: number) => {
 export const resizePixelRatio = (canvas: HTMLCanvasElement) => {
   const devicePixelRatio = window.devicePixelRatio || 1;
 
-  canvas.width = 300 * devicePixelRatio;
-  canvas.height = 150 * devicePixelRatio;
+  canvas.width = exampleDimensions.width * devicePixelRatio;
+  canvas.height = exampleDimensions.height * devicePixelRatio;
 
-  canvas.style.width = 300 + "px";
-  canvas.style.height = 150 + "px";
+  canvas.style.width = exampleDimensions.width + "px";
+  canvas.style.height = exampleDimensions.height + "px";
 };

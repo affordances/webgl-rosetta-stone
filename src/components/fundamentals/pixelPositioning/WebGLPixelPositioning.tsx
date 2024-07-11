@@ -5,7 +5,11 @@ import {
   fragmentShaderSource,
   vertices,
 } from "./constants";
-import { createProgram, createShader, resizePixelRatio } from "../../helpers";
+import {
+  createProgram,
+  createShader,
+  resizePixelRatio,
+} from "../../../helpers";
 
 export const WebGLMain = (canvas: HTMLCanvasElement) => {
   const gl = canvas.getContext("webgl");
@@ -38,6 +42,12 @@ export const WebGLMain = (canvas: HTMLCanvasElement) => {
   // look up where the vertex data needs to go.
   const positionAttributeLocation = gl.getAttribLocation(program, "position");
 
+  // look up uniform locations
+  const resolutionUniformLocation = gl.getUniformLocation(
+    program,
+    "resolution"
+  );
+
   // Create a buffer and put three 2d clip space points in it
   const positionBuffer = gl.createBuffer();
 
@@ -46,7 +56,7 @@ export const WebGLMain = (canvas: HTMLCanvasElement) => {
 
   gl.bufferData(
     gl.ARRAY_BUFFER,
-    new Float32Array(vertices.webGl),
+    new Float32Array(vertices.webGlVertices),
     gl.STATIC_DRAW
   );
 
@@ -85,14 +95,17 @@ export const WebGLMain = (canvas: HTMLCanvasElement) => {
     offset
   );
 
+  // set the resolution
+  gl.uniform2f(resolutionUniformLocation, gl.canvas.width, gl.canvas.height);
+
   // draw
   const primitiveType = gl.TRIANGLES;
   //   const offset = 0;
-  const count = 3;
+  const count = 6;
   gl.drawArrays(primitiveType, offset, count);
 };
 
-export const WebGLCustomShaderExample = () => {
+export const WebGLPixelPositioningExample = () => {
   const ref = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {

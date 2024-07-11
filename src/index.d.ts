@@ -1,9 +1,17 @@
 import * as THREE from "@react-three/fiber";
 
-import { CustomShader } from "./components/ReactThreeFiber";
+import { CustomTriangle } from "./components/fundamentals/triangle/ReactThreeFiberTriangle";
+import { CustomRectangle } from "./components/fundamentals/pixelPositioning/ReactThreeFiberPixelPositioning";
 
 declare module "@react-three/fiber" {
   interface ThreeElements {
-    customShader: THREE.RawShaderMaterial<CustomShader, typeof CustomShader>;
+    customTriangle: THREE.RawShaderMaterial<
+      CustomTriangle,
+      typeof CustomTriangle
+    >;
+    customRectangle: THREE.RawShaderMaterial<
+      CustomRectangle,
+      typeof CustomRectangle
+    >;
   }
 }
