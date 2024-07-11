@@ -2,11 +2,7 @@ import { insertEveryNth } from "../../../helpers";
 
 const webGlVertices = [10, 20, 80, 20, 10, 30, 10, 30, 80, 20, 80, 30];
 
-const threeAndR3f = insertEveryNth(
-  [10, 20, 80, 20, 10, 30, 10, 30, 80, 20, 80, 30],
-  2,
-  0
-);
+const threeAndR3f = insertEveryNth(webGlVertices, 2, 0);
 
 export const vertices = {
   webGlVertices,
@@ -14,7 +10,7 @@ export const vertices = {
 };
 
 export const vertexShaderSource = `
-  attribute vec4 position;
+  attribute vec2 position;
 
   uniform vec2 resolution;
 

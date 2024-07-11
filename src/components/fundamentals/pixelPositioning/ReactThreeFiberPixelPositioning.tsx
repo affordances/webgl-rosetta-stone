@@ -22,8 +22,6 @@ class CustomRectangle extends THREE.RawShaderMaterial {
           ),
         },
       },
-      // so it's not necessary to flip the first and second position coords
-      side: THREE.BackSide,
     });
   }
 }
@@ -39,18 +37,18 @@ export const ReactThreeFiberPixelPositioningExample = () => {
 
   return (
     <Canvas
-      orthographic
-      camera={{
-        zoom: 10,
-        position: [0, 0, 1],
-        left: 0,
-        right: 300,
-        top: 150,
-        bottom: 0,
-        near: -1,
-        far: 1,
-      }}
-      style={{ width: "300px", height: "150px" }}
+    // orthographic
+    // camera={{
+    //   zoom: 1,
+    //   position: [0, 0, 1],
+    //   left: 0,
+    //   right: 300,
+    //   top: 150,
+    //   bottom: 0,
+    //   near: -1,
+    //   far: 1,
+    // }}
+    // style={{ width: "300px", height: "150px" }}
     >
       <mesh ref={meshRef}>
         <bufferGeometry>
