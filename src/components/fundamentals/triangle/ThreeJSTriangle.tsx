@@ -39,7 +39,7 @@ export const ThreeJSTriangleExample = () => {
       vertexShader: vertexShaderSource,
       fragmentShader: fragmentShaderSource,
       // so it's not necessary to flip the first and second position coords
-      side: THREE.BackSide,
+      side: THREE.DoubleSide,
     });
 
     const mesh = new THREE.Mesh(geometry, material);

@@ -47,6 +47,7 @@ export const ThreeJSPixelPositioningExample = () => {
           value: new THREE.Vector2(width * dpr, height * dpr),
         },
       },
+      side: THREE.DoubleSide,
     });
 
     const mesh = new THREE.Mesh(geometry, material);

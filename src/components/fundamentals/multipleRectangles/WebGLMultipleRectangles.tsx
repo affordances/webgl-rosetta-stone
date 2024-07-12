@@ -1,15 +1,36 @@
 import { useRef, useEffect } from "react";
 
 import {
-  vertexShaderSource,
-  fragmentShaderSource,
-  vertices,
-} from "./constants";
-import {
   createProgram,
   createShader,
   resizePixelRatio,
 } from "../../../helpers";
+import { fragmentShaderSource, vertexShaderSource } from "./constants";
+
+// Returns a random integer from 0 to range - 1.
+const randomInt = (range: number) => {
+  return Math.floor(Math.random() * range);
+};
+
+// Fill the buffer with the values that define a rectangle.
+const setRectangle = (
+  gl: WebGLRenderingContext,
+  x: number,
+  y: number,
+  width: number,
+  height: number
+) => {
+  const x1 = x;
+  const x2 = x + width;
+  const y1 = y;
+  const y2 = y + height;
+
+  gl.bufferData(
+    gl.ARRAY_BUFFER,
+    new Float32Array([x1, y1, x2, y1, x1, y2, x1, y2, x2, y1, x2, y2]),
+    gl.STATIC_DRAW
+  );
+};
 
 export const WebGLMain = (canvas: HTMLCanvasElement) => {
   const gl = canvas.getContext("webgl");
@@ -47,21 +68,13 @@ export const WebGLMain = (canvas: HTMLCanvasElement) => {
     program,
     "resolution"
   );
+  const colorUniformLocation = gl.getUniformLocation(program, "color");
 
-  // Create a buffer and put three 2d clip space points in it
+  // Create a buffer to put three 2d clip space points in
   const positionBuffer = gl.createBuffer();
 
   // Bind it to ARRAY_BUFFER (think of it as ARRAY_BUFFER = positionBuffer)
   gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
-
-  gl.bufferData(
-    gl.ARRAY_BUFFER,
-    new Float32Array(vertices.webGlVertices),
-    gl.STATIC_DRAW
-  );
-
-  // code above this line is initialization code.
-  // code below this line is rendering code.
 
   // Tell WebGL how to convert from clip space to pixels
   gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
@@ -85,7 +98,6 @@ export const WebGLMain = (canvas: HTMLCanvasElement) => {
   const normalize = false; // don't normalize the data
   const stride = 0; // 0 = move forward size * sizeof(type) each iteration to get the next position
   const offset = 0; // start at the beginning of the buffer
-
   gl.vertexAttribPointer(
     positionAttributeLocation,
     size,
@@ -98,13 +110,37 @@ export const WebGLMain = (canvas: HTMLCanvasElement) => {
   // set the resolution
   gl.uniform2f(resolutionUniformLocation, gl.canvas.width, gl.canvas.height);
 
-  // draw
-  const primitiveType = gl.TRIANGLES;
-  const count = 6;
-  gl.drawArrays(primitiveType, offset, count);
+  // draw 50 random rectangles in random colors
+  for (let ii = 0; ii < 50; ++ii) {
+    // Setup a random rectangle
+    // This will write to positionBuffer because
+    // its the last thing we bound on the ARRAY_BUFFER
+    // bind point
+    setRectangle(
+      gl,
+      randomInt(300),
+      randomInt(300),
+      randomInt(300),
+      randomInt(300)
+    );
+
+    // Set a random color.
+    gl.uniform4f(
+      colorUniformLocation,
+      Math.random(),
+      Math.random(),
+      Math.random(),
+      1
+    );
+
+    // Draw the rectangle.
+    const primitiveType = gl.TRIANGLES;
+    const count = 6;
+    gl.drawArrays(primitiveType, offset, count);
+  }
 };
 
-export const WebGLPixelPositioningExample = () => {
+export const WebGLMultipleRectanglesExample = () => {
   const ref = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {

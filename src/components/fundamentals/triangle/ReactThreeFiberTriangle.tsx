@@ -14,7 +14,7 @@ class CustomTriangle extends THREE.RawShaderMaterial {
       vertexShader: vertexShaderSource,
       fragmentShader: fragmentShaderSource,
       // so it's not necessary to flip the first and second position coords
-      side: THREE.BackSide,
+      side: THREE.DoubleSide,
     });
   }
 }

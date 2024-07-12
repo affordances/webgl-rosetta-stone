@@ -22,6 +22,7 @@ class CustomRectangle extends THREE.RawShaderMaterial {
           ),
         },
       },
+      side: THREE.DoubleSide,
     });
   }
 }
