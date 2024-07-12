@@ -7,6 +7,7 @@ import { WebGLPixelPositioningExample } from "./components/fundamentals/pixelPos
 import { ThreeJSPixelPositioningExample } from "./components/fundamentals/pixelPositioning/ThreeJSPixelPositioning";
 import { ReactThreeFiberPixelPositioningExample } from "./components/fundamentals/pixelPositioning/ReactThreeFiberPixelPositioning";
 import { WebGLMultipleRectanglesExample } from "./components/fundamentals/multipleRectangles/WebGLMultipleRectangles";
+import { ThreeJSMultipleRectanglesExample } from "./components/fundamentals/multipleRectangles/ThreeJSMultipleRectangles";
 
 function App() {
   return (
@@ -48,7 +49,9 @@ function App() {
             <td>
               <WebGLMultipleRectanglesExample />
             </td>
-            <td>{/* <ThreeJSPixelPositioningExample /> */}</td>
+            <td>
+              <ThreeJSMultipleRectanglesExample />
+            </td>
             <td>{/* <ReactThreeFiberPixelPositioningExample /> */}</td>
           </tr>
         </tbody>

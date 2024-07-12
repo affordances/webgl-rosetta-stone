@@ -3,16 +3,11 @@ import { useRef, useEffect } from "react";
 import {
   createProgram,
   createShader,
+  randomInt,
   resizePixelRatio,
 } from "../../../helpers";
 import { fragmentShaderSource, vertexShaderSource } from "./constants";
 
-// Returns a random integer from 0 to range - 1.
-const randomInt = (range: number) => {
-  return Math.floor(Math.random() * range);
-};
-
-// Fill the buffer with the values that define a rectangle.
 const setRectangle = (
   gl: WebGLRenderingContext,
   x: number,

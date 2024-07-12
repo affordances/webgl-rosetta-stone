@@ -78,3 +78,7 @@ export const resizePixelRatio = (canvas: HTMLCanvasElement) => {
   canvas.style.width = exampleDimensions.width + "px";
   canvas.style.height = exampleDimensions.height + "px";
 };
+
+export const randomInt = (range: number) => {
+  return Math.floor(Math.random() * range);
+};
