@@ -37,20 +37,7 @@ export const ReactThreeFiberPixelPositioningExample = () => {
   const positions = new Float32Array(vertices.threeAndR3f);
 
   return (
-    <Canvas
-    // orthographic
-    // camera={{
-    //   zoom: 1,
-    //   position: [0, 0, 1],
-    //   left: 0,
-    //   right: 300,
-    //   top: 150,
-    //   bottom: 0,
-    //   near: -1,
-    //   far: 1,
-    // }}
-    // style={{ width: "300px", height: "150px" }}
-    >
+    <Canvas>
       <mesh ref={meshRef}>
         <bufferGeometry>
           <bufferAttribute

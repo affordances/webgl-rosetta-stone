@@ -3,6 +3,7 @@ import * as THREE from "three";
 
 import { fragmentShaderSource, vertexShaderSource } from "./constants";
 import { exampleDimensions } from "../../../constants";
+import { insertEveryNth, randomInt } from "../../../helpers";
 
 export const ThreeJSMultipleRectanglesExample = () => {
   const mountRef = useRef<HTMLDivElement>(null);
@@ -30,24 +31,74 @@ export const ThreeJSMultipleRectanglesExample = () => {
 
     ref.appendChild(renderer.domElement);
 
-    // const positions = new Float32Array(vertices.threeAndR3f);
+    function createRectangle(
+      x: number,
+      y: number,
+      width: number,
+      height: number,
+      color: THREE.Vector4
+    ) {
+      const vertices = insertEveryNth(
+        [
+          x,
+          y,
+          x + width,
+          y,
+          x,
+          y + height,
+          x,
+          y + height,
+          x + width,
+          y,
+          x + width,
+          y + height,
+        ],
+        2,
+        0
+      );
+      const positions = new Float32Array(vertices);
+      const geometry = new THREE.BufferGeometry();
 
-    const geometry = new THREE.BufferGeometry();
-    // geometry.setAttribute("position", new THREE.BufferAttribute(positions, 3));
+      geometry.setAttribute(
+        "position",
+        new THREE.BufferAttribute(positions, 3)
+      );
 
-    const material = new THREE.RawShaderMaterial({
-      vertexShader: vertexShaderSource,
-      fragmentShader: fragmentShaderSource,
-      uniforms: {
-        resolution: {
-          value: new THREE.Vector2(width * dpr, height * dpr),
+      const material = new THREE.RawShaderMaterial({
+        vertexShader: vertexShaderSource,
+        fragmentShader: fragmentShaderSource,
+        uniforms: {
+          resolution: {
+            value: new THREE.Vector2(width * dpr, height * dpr),
+          },
+          color: {
+            value: color,
+          },
         },
-      },
-      //   side: THREE.DoubleSide,
-    });
+        side: THREE.DoubleSide,
+      });
 
-    const mesh = new THREE.Mesh(geometry, material);
-    scene.add(mesh);
+      const mesh = new THREE.Mesh(geometry, material);
+      return mesh;
+    }
+
+    for (let i = 0; i < 50; i++) {
+      const color = new THREE.Vector4(
+        Math.random(),
+        Math.random(),
+        Math.random()
+      );
+
+      const rectangle = createRectangle(
+        randomInt(300),
+        randomInt(300),
+        randomInt(300),
+        randomInt(300),
+        color
+      );
+
+      scene.add(rectangle);
+    }
 
     const animate = () => {
       requestAnimationFrame(animate);
