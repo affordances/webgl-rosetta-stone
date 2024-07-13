@@ -9,6 +9,7 @@ import { ReactThreeFiberPixelPositioningExample } from "./components/fundamental
 import { WebGLMultipleRectanglesExample } from "./components/fundamentals/multipleRectangles/WebGLMultipleRectangles";
 import { ThreeJSMultipleRectanglesExample } from "./components/fundamentals/multipleRectangles/ThreeJSMultipleRectangles";
 import { ReactThreeFiberMultipleRectanglesExample } from "./components/fundamentals/multipleRectangles/ReactThreeFiberMultipleRectangles";
+import { WebGLVaryingTriangleExample } from "./components/howItWorks/varyingTriangle/WebGLVaryingTriangle";
 
 function App() {
   return (
@@ -56,6 +57,14 @@ function App() {
             <td>
               <ReactThreeFiberMultipleRectanglesExample />
             </td>
+          </tr>
+          <tr>
+            <th scope="row">varying triangle</th>
+            <td>
+              <WebGLVaryingTriangleExample />
+            </td>
+            <td>{/* <ThreeJSMultipleRectanglesExample /> */}</td>
+            <td>{/* <ReactThreeFiberMultipleRectanglesExample /> */}</td>
           </tr>
         </tbody>
       </table>

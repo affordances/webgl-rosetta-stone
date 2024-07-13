@@ -82,3 +82,9 @@ export const resizePixelRatio = (canvas: HTMLCanvasElement) => {
 export const randomInt = (range: number) => {
   return Math.floor(Math.random() * range);
 };
+
+export const projection = (width: number, height: number) => {
+  const projectionMatrix = [2 / width, 0, 0, 0, -2 / height, 0, -1, 1, 1];
+
+  return new Float32Array(projectionMatrix);
+};
