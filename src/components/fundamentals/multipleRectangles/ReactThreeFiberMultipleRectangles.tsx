@@ -1,19 +1,22 @@
-import { useMemo, useRef } from "react";
+// import { useRef } from "react";
 import * as THREE from "three";
 import { Canvas, extend } from "@react-three/fiber";
 
 import { exampleDimensions } from "../../../constants";
 import { fragmentShaderSource, vertexShaderSource } from "./constants";
-import { vertices } from "../pixelPositioning/constants";
+import { insertEveryNth, randomInt } from "../../../helpers";
 
 class ColoredRectangle extends THREE.RawShaderMaterial {
-  constructor(color: THREE.Vector4, resolution: THREE.Vector2) {
+  constructor(color: THREE.Vector4) {
     super({
       vertexShader: vertexShaderSource,
       fragmentShader: fragmentShaderSource,
       uniforms: {
         resolution: {
-          value: resolution,
+          value: new THREE.Vector2(
+            exampleDimensions.width * window.devicePixelRatio,
+            exampleDimensions.height * window.devicePixelRatio
+          ),
         },
         color: {
           value: color,
@@ -27,69 +30,41 @@ class ColoredRectangle extends THREE.RawShaderMaterial {
 extend({ ColoredRectangle });
 export { ColoredRectangle };
 
-// export const ReactThreeFiberMultipleRectanglesExample = () => {
-//   const meshRef = useRef<THREE.Mesh>(null);
-//   const materialRef = useRef<THREE.RawShaderMaterial>(null);
-//   const color = new THREE.Vector4(Math.random(), Math.random(), Math.random());
-//   const resolution = new THREE.Vector2(
-//     exampleDimensions.width * window.devicePixelRatio,
-//     exampleDimensions.height * window.devicePixelRatio
-//   );
-
-//   const positions = new Float32Array(vertices.threeAndR3f);
-
-//   return (
-//     <Canvas>
-//       <mesh ref={meshRef}>
-//         <bufferGeometry>
-//           <bufferAttribute
-//             attach="attributes-position"
-//             array={positions}
-//             count={positions.length / 3}
-//             itemSize={3}
-//           />
-//         </bufferGeometry>
-//         <coloredRectangle ref={materialRef} args={[color, resolution]} />
-//       </mesh>
-//     </Canvas>
-//   );
-// };
-
 function createRectangleVertices(
   x: number,
   y: number,
   width: number,
   height: number
 ): Float32Array {
-  return new Float32Array([
-    x,
-    y,
-    0,
-    x + width,
-    y,
-    0,
-    x,
-    y + height,
-    0,
-    x,
-    y + height,
-    0,
-    x + width,
-    y,
-    0,
-    x + width,
-    y + height,
-    0,
-  ]);
+  const vertices = insertEveryNth(
+    [
+      x,
+      y,
+      x + width,
+      y,
+      x,
+      y + height,
+      x,
+      y + height,
+      x + width,
+      y,
+      x + width,
+      y + height,
+    ],
+    2,
+    0
+  );
+
+  return new Float32Array(vertices);
 }
 
-interface RectangleProps {
+type RectangleProps = {
   x: number;
   y: number;
   width: number;
   height: number;
   color: THREE.Vector4;
-}
+};
 
 const Rectangle: React.FC<RectangleProps> = ({
   x,
@@ -98,19 +73,23 @@ const Rectangle: React.FC<RectangleProps> = ({
   height,
   color,
 }) => {
-  const positions = useMemo(
-    () => createRectangleVertices(x, y, width, height),
-    [x, y, width, height]
-  );
+  // const meshRef = useRef<THREE.Mesh>(null);
+  // const materialRef = useRef<THREE.RawShaderMaterial>(null);
 
-  const geometry = useMemo(() => {
-    const geo = new THREE.BufferGeometry();
-    geo.setAttribute("position", new THREE.BufferAttribute(positions, 3));
-    return geo;
-  }, [positions]);
+  const positions = createRectangleVertices(x, y, width, height);
 
   return (
-    <mesh geometry={geometry}>
+    // <mesh ref={meshRef}>
+    <mesh>
+      <bufferGeometry>
+        <bufferAttribute
+          attach="attributes-position"
+          array={positions}
+          count={positions.length / 3}
+          itemSize={3}
+        />
+      </bufferGeometry>
+      {/* <coloredRectangle ref={materialRef} args={[color]} /> */}
       <coloredRectangle args={[color]} />
     </mesh>
   );
@@ -118,18 +97,30 @@ const Rectangle: React.FC<RectangleProps> = ({
 
 export const ReactThreeFiberMultipleRectanglesExample: React.FC = () => {
   const rectangles = Array.from({ length: 50 }, () => ({
-    x: Math.random() * 300,
-    y: Math.random() * 300,
-    width: Math.random() * 300,
-    height: Math.random() * 300,
-    color: new THREE.Vector4(Math.random(), Math.random(), Math.random(), 1),
+    x: randomInt(300),
+    y: randomInt(300),
+    width: randomInt(300),
+    height: randomInt(300),
+    color: new THREE.Vector4(Math.random(), Math.random(), Math.random()),
   }));
 
   return (
-    <Canvas>
-      {rectangles.map((rect, i) => (
-        <Rectangle key={i} {...rect} />
-      ))}
+    <Canvas
+      orthographic
+      camera={{
+        left: 0,
+        right: exampleDimensions.width,
+        top: exampleDimensions.height,
+        bottom: 0,
+        near: -1,
+        far: 1,
+        position: [0, 0, 1],
+      }}
+    >
+      {rectangles.map((rect, i) => {
+        // console.log(rect);
+        return <Rectangle key={i} {...rect} />;
+      })}
     </Canvas>
   );
 };

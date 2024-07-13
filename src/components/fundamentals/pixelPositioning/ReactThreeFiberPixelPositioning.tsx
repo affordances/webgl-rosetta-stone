@@ -1,4 +1,4 @@
-import { useRef } from "react";
+// import { useRef } from "react";
 import * as THREE from "three";
 import { Canvas, extend } from "@react-three/fiber";
 
@@ -31,14 +31,15 @@ extend({ CustomRectangle });
 export { CustomRectangle };
 
 export const ReactThreeFiberPixelPositioningExample = () => {
-  const meshRef = useRef<THREE.Mesh>(null);
-  const materialRef = useRef<THREE.RawShaderMaterial>(null);
+  // const meshRef = useRef<THREE.Mesh>(null);
+  // const materialRef = useRef<THREE.RawShaderMaterial>(null);
 
   const positions = new Float32Array(vertices.threeAndR3f);
 
   return (
     <Canvas>
-      <mesh ref={meshRef}>
+      {/* <mesh ref={meshRef}> */}
+      <mesh>
         <bufferGeometry>
           <bufferAttribute
             attach="attributes-position"
@@ -47,7 +48,8 @@ export const ReactThreeFiberPixelPositioningExample = () => {
             itemSize={3}
           />
         </bufferGeometry>
-        <customRectangle ref={materialRef} />
+        {/* <customRectangle ref={materialRef} /> */}
+        <customRectangle />
       </mesh>
     </Canvas>
   );
