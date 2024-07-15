@@ -5,6 +5,9 @@ import {
   createShader,
   projection,
   resizePixelRatio,
+  rotate,
+  scale,
+  translate,
 } from "../../../helpers";
 import { fragmentShaderSource, vertexShaderSource } from "./constants";
 
@@ -90,9 +93,9 @@ export const WebGLMain = (canvas: HTMLCanvasElement) => {
     offset
   );
 
-  // const translation = [200, 150];
-  // const angleInRadians = 0;
-  // const scale = [1, 1];
+  const translation = [200, 150];
+  const angleInRadians = 0;
+  const _scale = [1, 1];
 
   // Compute the matrix
   let matrix;
@@ -103,9 +106,9 @@ export const WebGLMain = (canvas: HTMLCanvasElement) => {
     return;
   }
 
-  // matrix = m3.translate(matrix, translation[0], translation[1]);
-  // matrix = m3.rotate(matrix, angleInRadians);
-  // matrix = m3.scale(matrix, scale[0], scale[1]);
+  matrix = translate(matrix, translation[0], translation[1]);
+  matrix = rotate(matrix, angleInRadians);
+  matrix = scale(matrix, _scale[0], _scale[1]);
 
   // Set the matrix.
   gl.uniformMatrix3fv(matrixLocation, false, matrix);
