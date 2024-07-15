@@ -91,33 +91,6 @@ export const translation = (tx: number, ty: number): Float32Array => {
   return new Float32Array([1, 0, 0, 0, 1, 0, tx, ty, 1]);
 };
 
-// export const multiply = (a: Float32Array, b: Float32Array): Float32Array => {
-//   const multiplyElements = (aRow: Array<number>, bCol: Array<number>) =>
-//     aRow[0] * bCol[0] + aRow[1] * bCol[1] + aRow[2] * bCol[2];
-
-//   const getRow = (matrix: Float32Array, rowIndex: number) => [
-//     matrix[rowIndex * 3],
-//     matrix[rowIndex * 3 + 1],
-//     matrix[rowIndex * 3 + 2],
-//   ];
-
-//   const getCol = (matrix: Float32Array, colIndex: number) => [
-//     matrix[colIndex],
-//     matrix[colIndex + 3],
-//     matrix[colIndex + 6],
-//   ];
-
-//   const result = [];
-
-//   for (let row = 0; row < 3; row++) {
-//     for (let col = 0; col < 3; col++) {
-//       result.push(multiplyElements(getRow(a, row), getCol(b, col)));
-//     }
-//   }
-
-//   return new Float32Array(result);
-// };
-
 export const multiply = (a: Float32Array, b: Float32Array): Float32Array => {
   const createMatrix3 = (): Float32Array => new Float32Array(9);
 

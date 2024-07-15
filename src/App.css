@@ -12,6 +12,33 @@
   width: 100%;
 }
 
+.controls {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 12px;
+
+  .slider-row {
+    align-items: center;
+    display: flex;
+    gap: 16px;
+    width: 100%;
+
+    label {
+      display: flex;
+      flex: 1;
+      font-size: 12px;
+      font-weight: 400;
+      justify-content: flex-end;
+    }
+
+    input {
+      display: flex;
+      flex: 4;
+    }
+  }
+}
+
 table {
   border-collapse: collapse;
 }
@@ -23,6 +50,7 @@ td {
 
 th {
   height: 32px;
+  padding: 16px;
   width: 300px;
 }
 

@@ -117,35 +117,6 @@ export const WebGLMain = (canvas: HTMLCanvasElement) => {
   const primitiveType = gl.TRIANGLES;
   const count = 3;
   gl.drawArrays(primitiveType, offset, count);
-
-  // Setup a ui.
-  // webglLessonsUI.setupSlider("#x", {value: translation[0], slide: updatePosition(0), max: gl.canvas.width });
-  // webglLessonsUI.setupSlider("#y", {value: translation[1], slide: updatePosition(1), max: gl.canvas.height});
-  // webglLessonsUI.setupSlider("#angle", {slide: updateAngle, max: 360});
-  // webglLessonsUI.setupSlider("#scaleX", {value: scale[0], slide: updateScale(0), min: -5, max: 5, step: 0.01, precision: 2});
-  // webglLessonsUI.setupSlider("#scaleY", {value: scale[1], slide: updateScale(1), min: -5, max: 5, step: 0.01, precision: 2});
-
-  // function updatePosition(index) {
-  //   return function(event, ui) {
-  //     translation[index] = ui.value;
-  //     drawScene();
-  //   };
-  // }
-
-  // function updateAngle(event, ui) {
-  //   const angleInDegrees = 360 - ui.value;
-  //   angleInRadians = angleInDegrees * Math.PI / 180;
-  //   drawScene();
-  // }
-
-  // function updateScale(index) {
-  //   return function(event, ui) {
-  //     scale[index] = ui.value;
-  //     drawScene();
-  //   };
-  // }
-
-  // Draw the scene.
 };
 
 export const WebGLVaryingTriangleExample = () => {

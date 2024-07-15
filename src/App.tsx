@@ -10,6 +10,7 @@ import { WebGLMultipleRectanglesExample } from "./components/fundamentals/multip
 import { ThreeJSMultipleRectanglesExample } from "./components/fundamentals/multipleRectangles/ThreeJSMultipleRectangles";
 import { ReactThreeFiberMultipleRectanglesExample } from "./components/fundamentals/multipleRectangles/ReactThreeFiberMultipleRectangles";
 import { WebGLVaryingTriangleExample } from "./components/howItWorks/varyingTriangle/WebGLVaryingTriangle";
+import { Controls } from "./components/howItWorks/varyingTriangle/Controls";
 
 function App() {
   return (
@@ -59,7 +60,10 @@ function App() {
             </td>
           </tr>
           <tr>
-            <th scope="row">varying triangle</th>
+            <th scope="row">
+              varying triangle
+              <Controls />
+            </th>
             <td>
               <WebGLVaryingTriangleExample />
             </td>
