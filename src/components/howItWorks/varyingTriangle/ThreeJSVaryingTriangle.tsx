@@ -7,8 +7,16 @@ import {
   vertices,
 } from "./constants";
 import { exampleDimensions } from "../../../constants";
+import { projection, translate, rotate, scale } from "../../../helpers";
+import { ControlsState } from "./useControls";
 
-export const ThreeJSVaryingTriangle = () => {
+export const ThreeJSVaryingTriangle = ({
+  posX,
+  posY,
+  angleInRadians,
+  scaleX,
+  scaleY,
+}: ControlsState) => {
   const mountRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -39,12 +47,17 @@ export const ThreeJSVaryingTriangle = () => {
     const geometry = new THREE.BufferGeometry();
     geometry.setAttribute("position", new THREE.BufferAttribute(positions, 3));
 
+    let matrix = projection(width, height);
+    matrix = translate(matrix, posX, posY);
+    matrix = rotate(matrix, angleInRadians);
+    matrix = scale(matrix, scaleX, scaleY);
+
     const material = new THREE.RawShaderMaterial({
       vertexShader: vertexShaderSource,
       fragmentShader: fragmentShaderSource,
       uniforms: {
         matrix: {
-          value: new Float32Array(vertices.threeAndR3f),
+          value: matrix,
         },
       },
       side: THREE.DoubleSide,
@@ -66,7 +79,7 @@ export const ThreeJSVaryingTriangle = () => {
       }
       renderer.dispose();
     };
-  }, []);
+  }, [posX, posY, angleInRadians, scaleX, scaleY]);
 
   return <div ref={mountRef} />;
 };
