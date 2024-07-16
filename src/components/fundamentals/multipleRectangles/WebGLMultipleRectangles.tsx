@@ -142,7 +142,7 @@ export const WebGLMultipleRectanglesExample = () => {
     if (ref.current) {
       WebGLMain(ref.current);
     }
-  });
+  }, [ref]);
 
   return <canvas ref={ref}></canvas>;
 };

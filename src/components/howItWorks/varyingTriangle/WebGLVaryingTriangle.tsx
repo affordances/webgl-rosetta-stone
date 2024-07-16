@@ -10,8 +10,9 @@ import {
   translate,
 } from "../../../helpers";
 import { fragmentShaderSource, vertexShaderSource } from "./constants";
+import { ControlsState } from "./useControls";
 
-export const WebGLMain = (canvas: HTMLCanvasElement) => {
+export const WebGLMain = (canvas: HTMLCanvasElement, props: ControlsState) => {
   const gl = canvas.getContext("webgl");
 
   if (!gl) {
@@ -40,10 +41,10 @@ export const WebGLMain = (canvas: HTMLCanvasElement) => {
   }
 
   // look up where the vertex data needs to go.
-  const positionAttributeLocation = gl.getAttribLocation(program, "a_position");
+  const positionAttributeLocation = gl.getAttribLocation(program, "position");
 
   // lookup uniforms
-  const matrixLocation = gl.getUniformLocation(program, "u_matrix");
+  const matrixLocation = gl.getUniformLocation(program, "matrix");
 
   // Create a buffer.
   const positionBuffer = gl.createBuffer();
@@ -55,7 +56,7 @@ export const WebGLMain = (canvas: HTMLCanvasElement) => {
   // bound to the ARRAY_BUFFER bind point
   gl.bufferData(
     gl.ARRAY_BUFFER,
-    new Float32Array([0, -100, 150, 125, -175, 100]),
+    new Float32Array([0, -50, 75, 62.5, -87.5, 50]),
     gl.STATIC_DRAW
   );
 
@@ -93,10 +94,6 @@ export const WebGLMain = (canvas: HTMLCanvasElement) => {
     offset
   );
 
-  const translation = [200, 150];
-  const angleInRadians = 0;
-  const _scale = [1, 1];
-
   // Compute the matrix
   let matrix;
 
@@ -106,9 +103,9 @@ export const WebGLMain = (canvas: HTMLCanvasElement) => {
     return;
   }
 
-  matrix = translate(matrix, translation[0], translation[1]);
-  matrix = rotate(matrix, angleInRadians);
-  matrix = scale(matrix, _scale[0], _scale[1]);
+  matrix = translate(matrix, props.posX, props.posY);
+  matrix = rotate(matrix, props.angleInRadians);
+  matrix = scale(matrix, props.scaleX, props.scaleY);
 
   // Set the matrix.
   gl.uniformMatrix3fv(matrixLocation, false, matrix);
@@ -119,12 +116,12 @@ export const WebGLMain = (canvas: HTMLCanvasElement) => {
   gl.drawArrays(primitiveType, offset, count);
 };
 
-export const WebGLVaryingTriangleExample = () => {
+export const WebGLVaryingTriangleExample = (props: ControlsState) => {
   const ref = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
     if (ref.current) {
-      WebGLMain(ref.current);
+      WebGLMain(ref.current, props);
     }
   });
 

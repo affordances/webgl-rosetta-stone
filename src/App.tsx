@@ -11,8 +11,11 @@ import { ThreeJSMultipleRectanglesExample } from "./components/fundamentals/mult
 import { ReactThreeFiberMultipleRectanglesExample } from "./components/fundamentals/multipleRectangles/ReactThreeFiberMultipleRectangles";
 import { WebGLVaryingTriangleExample } from "./components/howItWorks/varyingTriangle/WebGLVaryingTriangle";
 import { Controls } from "./components/howItWorks/varyingTriangle/Controls";
+import { useControls } from "./components/howItWorks/varyingTriangle/useControls";
 
 function App() {
+  const controls = useControls();
+
   return (
     <div className="container">
       <table>
@@ -62,10 +65,10 @@ function App() {
           <tr>
             <th scope="row">
               varying triangle
-              <Controls />
+              <Controls {...controls} />
             </th>
             <td>
-              <WebGLVaryingTriangleExample />
+              <WebGLVaryingTriangleExample {...controls} />
             </td>
             <td>{/* <ThreeJSMultipleRectanglesExample /> */}</td>
             <td>{/* <ReactThreeFiberMultipleRectanglesExample /> */}</td>

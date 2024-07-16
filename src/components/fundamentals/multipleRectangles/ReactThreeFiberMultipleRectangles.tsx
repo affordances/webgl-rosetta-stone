@@ -5,6 +5,7 @@ import { Canvas, extend } from "@react-three/fiber";
 import { exampleDimensions } from "../../../constants";
 import { fragmentShaderSource, vertexShaderSource } from "./constants";
 import { insertEveryNth, randomInt } from "../../../helpers";
+import { useEffect, useState } from "react";
 
 class ColoredRectangle extends THREE.RawShaderMaterial {
   constructor(color: THREE.Vector4) {
@@ -96,15 +97,23 @@ const Rectangle: React.FC<RectangleProps> = ({
 };
 
 export const ReactThreeFiberMultipleRectanglesExample: React.FC = () => {
-  const rectangles = Array.from({ length: 50 }, () => ({
-    x: randomInt(300),
-    y: randomInt(300),
-    width: randomInt(300),
-    height: randomInt(300),
-    color: new THREE.Vector4(Math.random(), Math.random(), Math.random()),
-  }));
+  const [rectangles, setRectangles] = useState<Array<RectangleProps> | null>(
+    null
+  );
 
-  return (
+  useEffect(() => {
+    const _rectangles = Array.from({ length: 50 }, () => ({
+      x: randomInt(300),
+      y: randomInt(300),
+      width: randomInt(300),
+      height: randomInt(300),
+      color: new THREE.Vector4(Math.random(), Math.random(), Math.random()),
+    }));
+
+    setRectangles(_rectangles);
+  }, []);
+
+  return rectangles ? (
     <Canvas
       orthographic
       camera={{
@@ -122,5 +131,5 @@ export const ReactThreeFiberMultipleRectanglesExample: React.FC = () => {
         return <Rectangle key={i} {...rect} />;
       })}
     </Canvas>
-  );
+  ) : null;
 };
