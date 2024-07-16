@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import * as THREE from "three";
 
 import {
@@ -36,15 +36,17 @@ export const ThreeJSVaryingTriangle = ({
   scaleY,
 }: ControlsState) => {
   const mountRef = useRef<HTMLDivElement>(null);
-  // const meshRef = useRef<THREE.Mesh | null>(null);
-  // const materialRef = useRef<THREE.RawShaderMaterial | null>(null);
 
-  useEffect(() => {
-    // if (!mountRef.current || !meshRef.current || !materialRef.current) return;
-    if (!mountRef.current) return;
+  const initialMatrix = getMatrix({
+    posX,
+    posY,
+    angleInRadians,
+    scaleX,
+    scaleY,
+  });
 
-    const ref = mountRef.current;
-
+  // Memoize the scene, camera, and renderer
+  const { scene, camera, renderer } = useMemo(() => {
     const scene = new THREE.Scene();
 
     const dpr = window.devicePixelRatio;
@@ -55,26 +57,24 @@ export const ThreeJSVaryingTriangle = ({
     camera.position.z = 1;
 
     const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-
     renderer.setSize(width * dpr, height * dpr, false);
     renderer.domElement.style.width = `${width}px`;
     renderer.domElement.style.height = `${height}px`;
     renderer.setPixelRatio(dpr);
 
+    return { scene, camera, renderer };
+  }, []);
+
+  useEffect(() => {
+    if (!mountRef.current) return;
+
+    const ref = mountRef.current;
     ref.appendChild(renderer.domElement);
 
     const positions = new Float32Array(vertices.threeAndR3f);
 
     const geometry = new THREE.BufferGeometry();
     geometry.setAttribute("position", new THREE.BufferAttribute(positions, 3));
-
-    const initialMatrix = getMatrix({
-      posX,
-      posY,
-      angleInRadians,
-      scaleX,
-      scaleY,
-    });
 
     const material = new THREE.RawShaderMaterial({
       vertexShader: vertexShaderSource,
@@ -87,44 +87,22 @@ export const ThreeJSVaryingTriangle = ({
       side: THREE.DoubleSide,
     });
 
-    // materialRef.current = material;
-
     const mesh = new THREE.Mesh(geometry, material);
-
-    // meshRef.current = mesh;
-
     scene.add(mesh);
 
     const animate = () => {
-      // const matrix = getMatrix({
-      //   posX,
-      //   posY,
-      //   angleInRadians,
-      //   scaleX,
-      //   scaleY,
-      // });
-      // material.uniforms.matrix.value = matrix;
       requestAnimationFrame(animate);
       renderer.render(scene, camera);
     };
 
     animate();
 
+    // Cleanup function
     return () => {
-      if (ref) {
-        ref.removeChild(renderer.domElement);
-      }
+      scene.remove(mesh);
       renderer.dispose();
     };
-    // }, [posX, posY, angleInRadians, scaleX, scaleY]);
-  });
-
-  // useEffect(() => {
-  //   if (materialRef.current && meshRef.current) {
-  //     const matrix = getMatrix({ posX, posY, angleInRadians, scaleX, scaleY });
-  //     materialRef.current.uniforms.matrix.value = matrix;
-  //   }
-  // }, [posX, posY, angleInRadians, scaleX, scaleY]);
+  }, [initialMatrix, renderer, scene, camera]);
 
   return <div ref={mountRef} />;
 };
