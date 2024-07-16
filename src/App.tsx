@@ -1,22 +1,11 @@
 import "./App.css";
 
-import { WebGLTriangleExample } from "./components/fundamentals/triangle/WebGLTriangle";
-import { ThreeJSTriangleExample } from "./components/fundamentals/triangle/ThreeJSTriangle";
-import { ReactThreeFiberTriangleExample } from "./components/fundamentals/triangle/ReactThreeFiberTriangle";
-import { WebGLPixelPositioningExample } from "./components/fundamentals/pixelPositioning/WebGLPixelPositioning";
-import { ThreeJSPixelPositioningExample } from "./components/fundamentals/pixelPositioning/ThreeJSPixelPositioning";
-import { ReactThreeFiberPixelPositioningExample } from "./components/fundamentals/pixelPositioning/ReactThreeFiberPixelPositioning";
-import { WebGLMultipleRectanglesExample } from "./components/fundamentals/multipleRectangles/WebGLMultipleRectangles";
-import { ThreeJSMultipleRectanglesExample } from "./components/fundamentals/multipleRectangles/ThreeJSMultipleRectangles";
-import { ReactThreeFiberMultipleRectanglesExample } from "./components/fundamentals/multipleRectangles/ReactThreeFiberMultipleRectangles";
-import { WebGLVaryingTriangleExample } from "./components/howItWorks/varyingTriangle/WebGLVaryingTriangle";
-import { Controls } from "./components/howItWorks/varyingTriangle/Controls";
-import { useControls } from "./components/howItWorks/varyingTriangle/useControls";
-import { ThreeJSVaryingTriangle } from "./components/howItWorks/varyingTriangle/ThreeJSVaryingTriangle";
+import { Fundamentals } from "./components/fundamentals/triangle";
+import { PixelPositioning } from "./components/fundamentals/pixelPositioning";
+import { MultipleRectangles } from "./components/fundamentals/multipleRectangles";
+import { VaryingTriangle } from "./components/howItWorks/varyingTriangle";
 
 function App() {
-  const controls = useControls();
-
   return (
     <div className="container">
       <table>
@@ -27,55 +16,10 @@ function App() {
             <th scope="col">threejs</th>
             <th scope="col">react-three-fiber</th>
           </tr>
-          <tr>
-            <th scope="row">triangle</th>
-            <td>
-              <WebGLTriangleExample />
-            </td>
-            <td>
-              <ThreeJSTriangleExample />
-            </td>
-            <td>
-              <ReactThreeFiberTriangleExample />
-            </td>
-          </tr>
-          <tr>
-            <th scope="row">pixel positioning</th>
-            <td>
-              <WebGLPixelPositioningExample />
-            </td>
-            <td>
-              <ThreeJSPixelPositioningExample />
-            </td>
-            <td>
-              <ReactThreeFiberPixelPositioningExample />
-            </td>
-          </tr>
-          <tr>
-            <th scope="row">multiple rectangles</th>
-            <td>
-              <WebGLMultipleRectanglesExample />
-            </td>
-            <td>
-              <ThreeJSMultipleRectanglesExample />
-            </td>
-            <td>
-              <ReactThreeFiberMultipleRectanglesExample />
-            </td>
-          </tr>
-          <tr>
-            <th scope="row">
-              varying triangle
-              <Controls {...controls} />
-            </th>
-            <td>
-              <WebGLVaryingTriangleExample {...controls} />
-            </td>
-            <td>
-              <ThreeJSVaryingTriangle {...controls} />
-            </td>
-            <td>{/* <ReactThreeFiberMultipleRectanglesExample /> */}</td>
-          </tr>
+          <Fundamentals />
+          <PixelPositioning />
+          <MultipleRectangles />
+          <VaryingTriangle />
         </tbody>
       </table>
     </div>
