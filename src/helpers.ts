@@ -1,3 +1,4 @@
+import { ControlsState } from "./components/howItWorks/varyingTriangle/useControls";
 import { exampleDimensions } from "./constants";
 import { ShaderSourceType } from "./types";
 
@@ -150,4 +151,21 @@ export const scaling = (sx: number, sy: number): Float32Array => {
 
 export const scale = (m: Float32Array, sx: number, sy: number) => {
   return multiply(m, scaling(sx, sy));
+};
+
+export const getMatrix = ({
+  posX,
+  posY,
+  angleInRadians,
+  scaleX,
+  scaleY,
+  width,
+  height,
+}: ControlsState & { width: number; height: number }) => {
+  const projected = projection(width, height);
+  const translated = translate(projected, posX, posY);
+  const rotated = rotate(translated, angleInRadians);
+  const result = scale(rotated, scaleX, scaleY);
+
+  return result;
 };

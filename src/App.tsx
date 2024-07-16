@@ -21,7 +21,7 @@ function App() {
     <div className="container">
       <table>
         <tbody>
-          {/* <tr>
+          <tr>
             <th></th>
             <th scope="col">webgl</th>
             <th scope="col">threejs</th>
@@ -62,7 +62,7 @@ function App() {
             <td>
               <ReactThreeFiberMultipleRectanglesExample />
             </td>
-          </tr> */}
+          </tr>
           <tr>
             <th scope="row">
               varying triangle

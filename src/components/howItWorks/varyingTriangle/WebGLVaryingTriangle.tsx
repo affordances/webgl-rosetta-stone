@@ -3,11 +3,8 @@ import { useEffect, useRef } from "react";
 import {
   createProgram,
   createShader,
-  projection,
+  getMatrix,
   resizePixelRatio,
-  rotate,
-  scale,
-  translate,
 } from "../../../helpers";
 import {
   fragmentShaderSource,
@@ -102,14 +99,14 @@ export const WebGLMain = (canvas: HTMLCanvasElement, props: ControlsState) => {
   let matrix;
 
   if ("clientWidth" in gl.canvas && "clientHeight" in gl.canvas) {
-    matrix = projection(gl.canvas.clientWidth, gl.canvas.clientHeight);
+    matrix = getMatrix({
+      width: gl.canvas.clientWidth,
+      height: gl.canvas.clientHeight,
+      ...props,
+    });
   } else {
     return;
   }
-
-  matrix = translate(matrix, props.posX, props.posY);
-  matrix = rotate(matrix, props.angleInRadians);
-  matrix = scale(matrix, props.scaleX, props.scaleY);
 
   // Set the matrix.
   gl.uniformMatrix3fv(matrixLocation, false, matrix);

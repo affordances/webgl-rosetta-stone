@@ -7,26 +7,8 @@ import {
   vertices,
 } from "./constants";
 import { exampleDimensions } from "../../../constants";
-import { projection, translate, rotate, scale } from "../../../helpers";
 import { ControlsState } from "./useControls";
-
-const getMatrix = ({
-  posX,
-  posY,
-  angleInRadians,
-  scaleX,
-  scaleY,
-}: ControlsState) => {
-  const projected = projection(
-    exampleDimensions.width,
-    exampleDimensions.height
-  );
-  const translated = translate(projected, posX, posY);
-  const rotated = rotate(translated, angleInRadians);
-  const result = scale(rotated, scaleX, scaleY);
-
-  return result;
-};
+import { getMatrix } from "../../../helpers";
 
 export const ThreeJSVaryingTriangle = ({
   posX,
@@ -37,21 +19,23 @@ export const ThreeJSVaryingTriangle = ({
 }: ControlsState) => {
   const mountRef = useRef<HTMLDivElement>(null);
 
+  const dpr = window.devicePixelRatio;
+  const width = exampleDimensions.width;
+  const height = exampleDimensions.height;
+
   const initialMatrix = getMatrix({
     posX,
     posY,
     angleInRadians,
     scaleX,
     scaleY,
+    height,
+    width,
   });
 
   // Memoize the scene, camera, and renderer
   const { scene, camera, renderer } = useMemo(() => {
     const scene = new THREE.Scene();
-
-    const dpr = window.devicePixelRatio;
-    const width = exampleDimensions.width;
-    const height = exampleDimensions.height;
 
     const camera = new THREE.OrthographicCamera(0, width, height, 0, -1, 1);
     camera.position.z = 1;
@@ -63,7 +47,7 @@ export const ThreeJSVaryingTriangle = ({
     renderer.setPixelRatio(dpr);
 
     return { scene, camera, renderer };
-  }, []);
+  }, [dpr, height, width]);
 
   useEffect(() => {
     if (!mountRef.current) return;
