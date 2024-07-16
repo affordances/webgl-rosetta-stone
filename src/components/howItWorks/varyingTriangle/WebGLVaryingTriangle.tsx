@@ -9,7 +9,11 @@ import {
   scale,
   translate,
 } from "../../../helpers";
-import { fragmentShaderSource, vertexShaderSource } from "./constants";
+import {
+  fragmentShaderSource,
+  vertexShaderSource,
+  vertices,
+} from "./constants";
 import { ControlsState } from "./useControls";
 
 export const WebGLMain = (canvas: HTMLCanvasElement, props: ControlsState) => {
@@ -56,7 +60,7 @@ export const WebGLMain = (canvas: HTMLCanvasElement, props: ControlsState) => {
   // bound to the ARRAY_BUFFER bind point
   gl.bufferData(
     gl.ARRAY_BUFFER,
-    new Float32Array([0, -50, 75, 62.5, -87.5, 50]),
+    new Float32Array(vertices.webGlVertices),
     gl.STATIC_DRAW
   );
 

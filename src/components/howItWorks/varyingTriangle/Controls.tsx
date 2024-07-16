@@ -39,7 +39,7 @@ export const Controls = ({
         <label>angle</label>
         <input
           type="range"
-          value={angleInRadians}
+          value={angleInRadians * (180 / Math.PI)}
           min="0"
           max="360"
           onChange={updateAngleInRadians}
