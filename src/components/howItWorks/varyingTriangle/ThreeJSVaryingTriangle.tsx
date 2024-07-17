@@ -17,6 +17,7 @@ export const ThreeJSVaryingTriangleExample = ({
   scaleX,
   scaleY,
 }: ControlsState) => {
+  console.count("three");
   const mountRef = useRef<HTMLDivElement>(null);
 
   const dpr = window.devicePixelRatio;
@@ -33,7 +34,6 @@ export const ThreeJSVaryingTriangleExample = ({
     width,
   });
 
-  // Memoize the scene, camera, and renderer
   const { scene, camera, renderer } = useMemo(() => {
     const scene = new THREE.Scene();
 
@@ -81,7 +81,6 @@ export const ThreeJSVaryingTriangleExample = ({
 
     animate();
 
-    // Cleanup function
     return () => {
       scene.remove(mesh);
       renderer.dispose();

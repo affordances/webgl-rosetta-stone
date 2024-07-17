@@ -109,6 +109,7 @@ export const ReactThreeFiberMultipleRectanglesExample: React.FC = () => {
 
   return rectangles ? (
     <Canvas
+      frameloop="demand"
       orthographic
       camera={{
         left: 0,

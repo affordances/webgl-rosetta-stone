@@ -25,7 +25,7 @@ export const ReactThreeFiberTriangleExample = () => {
   const positions = new Float32Array(vertices.threeAndR3f);
 
   return (
-    <Canvas>
+    <Canvas frameloop="demand">
       <mesh>
         <bufferGeometry>
           <bufferAttribute

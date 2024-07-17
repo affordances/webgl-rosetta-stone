@@ -118,6 +118,7 @@ export const WebGLMain = (canvas: HTMLCanvasElement, props: ControlsState) => {
 };
 
 export const WebGLVaryingTriangleExample = (props: ControlsState) => {
+  console.count("webgl");
   const ref = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {

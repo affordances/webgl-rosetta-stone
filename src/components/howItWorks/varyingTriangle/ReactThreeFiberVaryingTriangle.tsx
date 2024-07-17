@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import { Canvas, extend } from "@react-three/fiber";
+import { Canvas, extend, useFrame } from "@react-three/fiber";
 
 import {
   fragmentShaderSource,
@@ -9,6 +9,7 @@ import {
 import { ControlsState } from "./useControls";
 import { getMatrix } from "../../../helpers";
 import { exampleDimensions } from "../../../constants";
+import { useMemo, useRef } from "react";
 
 class VaryingTriangle extends THREE.RawShaderMaterial {
   constructor(matrix: THREE.Vector4) {
@@ -28,37 +29,65 @@ class VaryingTriangle extends THREE.RawShaderMaterial {
 extend({ VaryingTriangle });
 export { VaryingTriangle };
 
-export const ReactThreeFiberVaryingTriangleExample = (props: ControlsState) => {
+const Triangle = (props: ControlsState) => {
+  console.count("inside triangle");
+
+  // const { gl } = useThree();
+
+  // console.log(gl);
+
   const { posX, posY, angleInRadians, scaleX, scaleY } = props;
+  const materialRef = useRef<THREE.RawShaderMaterial | null>(null);
 
   const width = exampleDimensions.width;
   const height = exampleDimensions.height;
 
-  const initialMatrix = getMatrix({
-    posX,
-    posY,
-    angleInRadians,
-    scaleX,
-    scaleY,
-    height,
-    width,
+  const initialMatrix = useMemo(
+    () =>
+      getMatrix({ posX, posY, angleInRadians, scaleX, scaleY, height, width }),
+    [posX, posY, angleInRadians, scaleX, scaleY, height, width]
+  );
+
+  useFrame(() => {
+    // console.count("inside useFrame");
+    if (materialRef.current) {
+      const newMatrix = getMatrix({
+        posX,
+        posY,
+        angleInRadians,
+        scaleX,
+        scaleY,
+        height,
+        width,
+      });
+
+      materialRef.current.uniforms.matrix.value = newMatrix;
+    }
   });
 
-  const positions = new Float32Array(vertices.threeAndR3f);
+  const positions = useMemo(() => new Float32Array(vertices.threeAndR3f), []);
 
   return (
-    <Canvas>
-      <mesh>
-        <bufferGeometry>
-          <bufferAttribute
-            attach="attributes-position"
-            array={positions}
-            count={positions.length / 3}
-            itemSize={3}
-          />
-        </bufferGeometry>
-        <varyingTriangle args={[initialMatrix]} />
-      </mesh>
+    <mesh>
+      <bufferGeometry>
+        <bufferAttribute
+          attach="attributes-position"
+          array={positions}
+          count={positions.length / 3}
+          itemSize={3}
+        />
+      </bufferGeometry>
+      <varyingTriangle ref={materialRef} args={[initialMatrix]} />
+    </mesh>
+  );
+};
+
+export const ReactThreeFiberVaryingTriangleExample = (props: ControlsState) => {
+  console.count("r3f");
+
+  return (
+    <Canvas frameloop="demand">
+      <Triangle {...props} />
     </Canvas>
   );
 };

@@ -1,9 +1,13 @@
+import * as THREE from "three";
+
 import "./App.css";
 
 import { Fundamentals } from "./components/fundamentals/triangle";
 import { PixelPositioning } from "./components/fundamentals/pixelPositioning";
 import { MultipleRectangles } from "./components/fundamentals/multipleRectangles";
 import { VaryingTriangle } from "./components/howItWorks/varyingTriangle";
+
+THREE.ColorManagement.enabled = true;
 
 function App() {
   return (
