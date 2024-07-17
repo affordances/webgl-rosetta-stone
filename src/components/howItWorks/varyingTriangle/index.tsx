@@ -1,10 +1,12 @@
 import { Controls } from "./Controls";
-import { ThreeJSVaryingTriangle } from "./ThreeJSVaryingTriangle";
+import { ReactThreeFiberVaryingTriangleExample } from "./ReactThreeFiberVaryingTriangle";
+import { ThreeJSVaryingTriangleExample } from "./ThreeJSVaryingTriangle";
 import { useControls } from "./useControls";
 import { WebGLVaryingTriangleExample } from "./WebGLVaryingTriangle";
 
 export const VaryingTriangle = () => {
   const controls = useControls();
+
   return (
     <tr>
       <th scope="row">
@@ -15,9 +17,11 @@ export const VaryingTriangle = () => {
         <WebGLVaryingTriangleExample {...controls} />
       </td>
       <td>
-        <ThreeJSVaryingTriangle {...controls} />
+        <ThreeJSVaryingTriangleExample {...controls} />
       </td>
-      <td>{/* <ReactThreeFiberMultipleRectanglesExample /> */}</td>
+      <td>
+        <ReactThreeFiberVaryingTriangleExample {...controls} />
+      </td>
     </tr>
   );
 };

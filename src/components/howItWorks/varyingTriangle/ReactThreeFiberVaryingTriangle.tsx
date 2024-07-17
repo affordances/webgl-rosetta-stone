@@ -6,19 +6,18 @@ import {
   vertexShaderSource,
   vertices,
 } from "./constants";
+import { ControlsState } from "./useControls";
+import { getMatrix } from "../../../helpers";
 import { exampleDimensions } from "../../../constants";
 
-class CustomRectangle extends THREE.RawShaderMaterial {
-  constructor() {
+class VaryingTriangle extends THREE.RawShaderMaterial {
+  constructor(matrix: THREE.Vector4) {
     super({
       vertexShader: vertexShaderSource,
       fragmentShader: fragmentShaderSource,
       uniforms: {
-        resolution: {
-          value: new THREE.Vector2(
-            exampleDimensions.width * window.devicePixelRatio,
-            exampleDimensions.height * window.devicePixelRatio
-          ),
+        matrix: {
+          value: matrix,
         },
       },
       side: THREE.DoubleSide,
@@ -26,10 +25,25 @@ class CustomRectangle extends THREE.RawShaderMaterial {
   }
 }
 
-extend({ CustomRectangle });
-export { CustomRectangle };
+extend({ VaryingTriangle });
+export { VaryingTriangle };
 
-export const ReactThreeFiberPixelPositioningExample = () => {
+export const ReactThreeFiberVaryingTriangleExample = (props: ControlsState) => {
+  const { posX, posY, angleInRadians, scaleX, scaleY } = props;
+
+  const width = exampleDimensions.width;
+  const height = exampleDimensions.height;
+
+  const initialMatrix = getMatrix({
+    posX,
+    posY,
+    angleInRadians,
+    scaleX,
+    scaleY,
+    height,
+    width,
+  });
+
   const positions = new Float32Array(vertices.threeAndR3f);
 
   return (
@@ -43,7 +57,7 @@ export const ReactThreeFiberPixelPositioningExample = () => {
             itemSize={3}
           />
         </bufferGeometry>
-        <customRectangle />
+        <varyingTriangle args={[initialMatrix]} />
       </mesh>
     </Canvas>
   );

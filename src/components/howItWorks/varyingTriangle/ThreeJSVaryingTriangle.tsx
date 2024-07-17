@@ -10,7 +10,7 @@ import { exampleDimensions } from "../../../constants";
 import { ControlsState } from "./useControls";
 import { getMatrix } from "../../../helpers";
 
-export const ThreeJSVaryingTriangle = ({
+export const ThreeJSVaryingTriangleExample = ({
   posX,
   posY,
   angleInRadians,

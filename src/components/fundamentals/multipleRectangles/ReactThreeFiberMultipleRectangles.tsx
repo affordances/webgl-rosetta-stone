@@ -1,4 +1,3 @@
-// import { useRef } from "react";
 import * as THREE from "three";
 import { Canvas, extend } from "@react-three/fiber";
 
@@ -74,13 +73,9 @@ const Rectangle: React.FC<RectangleProps> = ({
   height,
   color,
 }) => {
-  // const meshRef = useRef<THREE.Mesh>(null);
-  // const materialRef = useRef<THREE.RawShaderMaterial>(null);
-
   const positions = createRectangleVertices(x, y, width, height);
 
   return (
-    // <mesh ref={meshRef}>
     <mesh>
       <bufferGeometry>
         <bufferAttribute
@@ -90,7 +85,6 @@ const Rectangle: React.FC<RectangleProps> = ({
           itemSize={3}
         />
       </bufferGeometry>
-      {/* <coloredRectangle ref={materialRef} args={[color]} /> */}
       <coloredRectangle args={[color]} />
     </mesh>
   );
@@ -126,10 +120,9 @@ export const ReactThreeFiberMultipleRectanglesExample: React.FC = () => {
         position: [0, 0, 1],
       }}
     >
-      {rectangles.map((rect, i) => {
-        // console.log(rect);
-        return <Rectangle key={i} {...rect} />;
-      })}
+      {rectangles.map((rect, i) => (
+        <Rectangle key={i} {...rect} />
+      ))}
     </Canvas>
   ) : null;
 };
