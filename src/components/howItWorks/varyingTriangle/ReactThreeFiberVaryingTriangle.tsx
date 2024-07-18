@@ -10,6 +10,7 @@ import { ControlsState } from "./useControls";
 import { getMatrix } from "../../../helpers";
 import { exampleDimensions } from "../../../constants";
 import { useMemo, useRef } from "react";
+import { Html } from "@react-three/drei";
 
 class VaryingTriangle extends THREE.RawShaderMaterial {
   constructor(matrix: THREE.Vector4) {
@@ -30,11 +31,7 @@ extend({ VaryingTriangle });
 export { VaryingTriangle };
 
 const Triangle = (props: ControlsState) => {
-  console.count("inside triangle");
-
-  // const { gl } = useThree();
-
-  // console.log(gl);
+  console.count("inside r3f Canvas");
 
   const { posX, posY, angleInRadians, scaleX, scaleY } = props;
   const materialRef = useRef<THREE.RawShaderMaterial | null>(null);
@@ -48,8 +45,8 @@ const Triangle = (props: ControlsState) => {
     [posX, posY, angleInRadians, scaleX, scaleY, height, width]
   );
 
-  useFrame(() => {
-    // console.count("inside useFrame");
+  useFrame((state) => {
+    console.log("frames", state.internal.frames);
     if (materialRef.current) {
       const newMatrix = getMatrix({
         posX,
@@ -65,7 +62,7 @@ const Triangle = (props: ControlsState) => {
     }
   });
 
-  const positions = useMemo(() => new Float32Array(vertices.threeAndR3f), []);
+  const positions = new Float32Array(vertices.threeAndR3f);
 
   return (
     <mesh>
@@ -82,11 +79,17 @@ const Triangle = (props: ControlsState) => {
   );
 };
 
+const Blah = () => {
+  console.count("inside r3f html");
+  return <Html>something</Html>;
+};
+
 export const ReactThreeFiberVaryingTriangleExample = (props: ControlsState) => {
-  console.count("r3f");
+  // console.count("r3f");
 
   return (
     <Canvas frameloop="demand">
+      <Blah />
       <Triangle {...props} />
     </Canvas>
   );

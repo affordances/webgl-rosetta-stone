@@ -20,9 +20,9 @@ function App() {
             <th scope="col">threejs</th>
             <th scope="col">react-three-fiber</th>
           </tr>
-          <Fundamentals />
+          {/* <Fundamentals />
           <PixelPositioning />
-          <MultipleRectangles />
+          <MultipleRectangles /> */}
           <VaryingTriangle />
         </tbody>
       </table>

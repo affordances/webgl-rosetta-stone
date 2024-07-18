@@ -17,7 +17,6 @@ export const ThreeJSVaryingTriangleExample = ({
   scaleX,
   scaleY,
 }: ControlsState) => {
-  console.count("three");
   const mountRef = useRef<HTMLDivElement>(null);
 
   const dpr = window.devicePixelRatio;
@@ -73,6 +72,7 @@ export const ThreeJSVaryingTriangleExample = ({
 
     const mesh = new THREE.Mesh(geometry, material);
     scene.add(mesh);
+    console.count("three");
 
     const animate = () => {
       requestAnimationFrame(animate);

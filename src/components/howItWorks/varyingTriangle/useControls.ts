@@ -25,6 +25,8 @@ export const useControls = (): ControlsProps => {
   const [scaleX, setScaleX] = useState(1);
   const [scaleY, setScaleY] = useState(1);
 
+  console.count("useControls");
+
   const updatePositionX = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPosX(Number(e.target.value));
   };

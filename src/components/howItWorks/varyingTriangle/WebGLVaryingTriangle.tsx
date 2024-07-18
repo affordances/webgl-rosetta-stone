@@ -114,11 +114,11 @@ export const WebGLMain = (canvas: HTMLCanvasElement, props: ControlsState) => {
   // Draw the geometry.
   const primitiveType = gl.TRIANGLES;
   const count = 3;
+  console.count("webgl");
   gl.drawArrays(primitiveType, offset, count);
 };
 
 export const WebGLVaryingTriangleExample = (props: ControlsState) => {
-  console.count("webgl");
   const ref = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
