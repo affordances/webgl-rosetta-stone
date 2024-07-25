@@ -1,0 +1,80 @@
+body {
+  box-sizing: border-box;
+  font-family: sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.app-wrapper {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  height: 100vh;
+  margin-top: 88px;
+  width: 100vw;
+
+  h1 {
+    margin: 0 0 32px 0;
+  }
+
+  #app {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    /* the "real" width */
+    width: 704px;
+
+    .scene-select-container {
+      align-items: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+
+      select {
+        cursor: pointer;
+        height: 24px;
+        width: 224px;
+      }
+    }
+
+    #tab-container {
+      display: flex;
+      gap: 16px;
+      height: 48px;
+      width: 100%;
+
+      .tab-button {
+        align-items: center;
+        background-color: inherit;
+        border: 1px solid black;
+        cursor: pointer;
+        display: flex;
+        flex: 1;
+        font-weight: 700;
+        justify-content: center;
+        outline: none;
+        padding: 16px;
+
+        &:hover {
+          background-color: lightgray;
+        }
+
+        &.selected {
+          background-color: gray;
+          color: white;
+        }
+      }
+    }
+
+    #scene-container {
+      border: 1px solid black;
+    }
+
+    #scene-container,
+    #r3f-container {
+      height: 352px;
+      /* 704 - 2 for everything to line up */
+      width: 702px;
+    }
+  }
+}

@@ -1,31 +1,17 @@
-import { useRef, useEffect } from "react";
+import { sceneSetup } from "@/constants";
+import { createProgram, createShader } from "@webGl/helpers";
 
-import {
-  vertexShaderSource,
-  fragmentShaderSource,
-  vertices,
-} from "./constants";
-import {
-  createProgram,
-  createShader,
-  resizePixelRatio,
-} from "../../../helpers";
-
-export const WebGLMain = (canvas: HTMLCanvasElement) => {
-  const gl = canvas.getContext("webgl");
-
-  if (!gl) {
-    return;
-  }
-
-  resizePixelRatio(canvas);
-
+const triangle = (gl: WebGLRenderingContext) => {
   // create GLSL shaders, upload the GLSL source, compile the shaders
-  const vertexShader = createShader(gl, gl.VERTEX_SHADER, vertexShaderSource);
+  const vertexShader = createShader(
+    gl,
+    gl.VERTEX_SHADER,
+    sceneSetup["triangle"].vert
+  );
   const fragmentShader = createShader(
     gl,
     gl.FRAGMENT_SHADER,
-    fragmentShaderSource
+    sceneSetup["triangle"].frag
   );
 
   if (!vertexShader || !fragmentShader) {
@@ -33,7 +19,7 @@ export const WebGLMain = (canvas: HTMLCanvasElement) => {
   }
 
   // Link the two shaders into a program
-  const program = createProgram(gl, vertexShader, fragmentShader);
+  let program = createProgram(gl, vertexShader, fragmentShader);
 
   if (!program) {
     return;
@@ -43,14 +29,14 @@ export const WebGLMain = (canvas: HTMLCanvasElement) => {
   const positionAttributeLocation = gl.getAttribLocation(program, "position");
 
   // Create a buffer and put three 2d clip space points in it
-  const positionBuffer = gl.createBuffer();
+  let positionBuffer = gl.createBuffer();
 
   // Bind it to ARRAY_BUFFER (think of it as ARRAY_BUFFER = positionBuffer)
   gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
 
   gl.bufferData(
     gl.ARRAY_BUFFER,
-    new Float32Array(vertices.webGlVertices),
+    new Float32Array(sceneSetup["triangle"].vertices),
     gl.STATIC_DRAW
   );
 
@@ -95,14 +81,4 @@ export const WebGLMain = (canvas: HTMLCanvasElement) => {
   gl.drawArrays(primitiveType, offset, count);
 };
 
-export const WebGLTriangleExample = () => {
-  const ref = useRef<HTMLCanvasElement>(null);
-
-  useEffect(() => {
-    if (ref.current) {
-      WebGLMain(ref.current);
-    }
-  });
-
-  return <canvas ref={ref}></canvas>;
-};
+export default triangle;
