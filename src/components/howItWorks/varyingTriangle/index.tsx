@@ -19,9 +19,7 @@ export const VaryingTriangle = () => {
       <td>
         <ThreeJSVaryingTriangleExample {...controls} />
       </td>
-      <td>
-        <ReactThreeFiberVaryingTriangleExample {...controls} />
-      </td>
+      <td>{/* <ReactThreeFiberVaryingTriangleExample {...controls} /> */}</td>
     </tr>
   );
 };

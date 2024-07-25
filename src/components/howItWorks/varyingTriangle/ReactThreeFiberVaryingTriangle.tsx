@@ -9,7 +9,7 @@ import {
 import { ControlsState } from "./useControls";
 import { getMatrix } from "../../../helpers";
 import { exampleDimensions } from "../../../constants";
-import { useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { Html } from "@react-three/drei";
 
 class VaryingTriangle extends THREE.RawShaderMaterial {
@@ -39,39 +39,28 @@ const Triangle = (props: ControlsState) => {
   const width = exampleDimensions.width;
   const height = exampleDimensions.height;
 
-  const initialMatrix = useMemo(
-    () =>
-      getMatrix({ posX, posY, angleInRadians, scaleX, scaleY, height, width }),
-    [posX, posY, angleInRadians, scaleX, scaleY, height, width]
-  );
+  const initialMatrix = useMemo(() => new THREE.Matrix4(), []);
 
-  useFrame((state) => {
-    console.log("frames", state.internal.frames);
-    if (materialRef.current) {
-      const newMatrix = getMatrix({
-        posX,
-        posY,
-        angleInRadians,
-        scaleX,
-        scaleY,
-        height,
-        width,
-      });
+  useEffect(() => {
+    getMatrix({
+      posX,
+      posY,
+      angleInRadians,
+      scaleX,
+      scaleY,
+      height,
+      width,
+    });
+  }, []);
 
-      materialRef.current.uniforms.matrix.value = newMatrix;
-    }
-  });
-
-  const positions = new Float32Array(vertices.threeAndR3f);
+  // const positions = new Float32Array(vertices.threeAndR3f);
 
   return (
     <mesh>
       <bufferGeometry>
-        <bufferAttribute
+        <float32BufferAttribute
           attach="attributes-position"
-          array={positions}
-          count={positions.length / 3}
-          itemSize={3}
+          args={[vertices.threeAndR3f, 3]}
         />
       </bufferGeometry>
       <varyingTriangle ref={materialRef} args={[initialMatrix]} />

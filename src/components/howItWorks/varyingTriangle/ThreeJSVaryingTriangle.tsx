@@ -70,6 +70,8 @@ export const ThreeJSVaryingTriangleExample = ({
       side: THREE.DoubleSide,
     });
 
+    console.log(camera);
+
     const mesh = new THREE.Mesh(geometry, material);
     scene.add(mesh);
     console.count("three");
