@@ -5,13 +5,9 @@ import { Canvas } from "@react-three/fiber";
 import sceneModules from "@r3f/scenes";
 import { SceneProps } from "@/types";
 
-type R3FWrapperProps = {
-  scene: string;
-} & SceneProps;
-
 let root: Root | null = null;
 
-const R3FWrapper: React.FC<R3FWrapperProps> = ({
+const R3FWrapper: React.FC<SceneProps> = ({
   scene,
   vertexShaderSource,
   fragmentShaderSource,

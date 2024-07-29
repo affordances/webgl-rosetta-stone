@@ -8,8 +8,11 @@ export type SceneModules = Record<string, SceneModule>;
 
 export type TabType = "webgl" | "threejs" | "r3f";
 
-export type SceneProps = {
-  scene: string;
+export type ShaderProps = {
   vertexShaderSource: string;
   fragmentShaderSource: string;
 };
+
+export type SceneProps = {
+  scene: string;
+} & ShaderProps;
