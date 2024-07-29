@@ -9,7 +9,11 @@ export const loadModule = (sceneModules: SceneModules, moduleName: string) => {
   }
 };
 
-export const insertEveryNth = <T>(array: Array<T>, n: number, value: T) => {
+export const insertEveryNth = <T>(
+  array: Array<T>,
+  n: number,
+  value: T
+): Array<T> => {
   return array.reduce((acc: T[], current: T, index: number) => {
     acc.push(current);
 
@@ -19,4 +23,8 @@ export const insertEveryNth = <T>(array: Array<T>, n: number, value: T) => {
 
     return acc;
   }, []);
+};
+
+export const randomInt = (range: number) => {
+  return Math.floor(Math.random() * range);
 };

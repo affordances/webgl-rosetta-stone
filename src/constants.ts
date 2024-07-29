@@ -1,4 +1,4 @@
-export const scenes = ["triangle", "pixelPositioning"];
+export const scenes = ["triangle", "pixelPositioning", "multipleRectangles"];
 
 export const exampleDimensions = {
   height: 352,
