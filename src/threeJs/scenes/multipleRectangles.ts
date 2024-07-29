@@ -9,16 +9,11 @@ const multipleRectangles = (
   vertexShaderSource: string,
   fragmentShaderSource: string
 ) => {
-  const camera = new THREE.PerspectiveCamera(
-    75,
-    window.innerWidth / window.innerHeight,
-    0.1,
-    1000
-  );
-
   const dpr = window.devicePixelRatio;
   const width = exampleDimensions.width;
   const height = exampleDimensions.height;
+
+  const camera = new THREE.OrthographicCamera(0, width / dpr, 0, height / dpr);
 
   renderer.setPixelRatio(dpr);
   renderer.setSize(width, height);
@@ -52,8 +47,8 @@ const multipleRectangles = (
         0
       )
     );
-    const geometry = new THREE.BufferGeometry();
 
+    const geometry = new THREE.BufferGeometry();
     geometry.setAttribute("position", new THREE.BufferAttribute(positions, 3));
 
     const material = new THREE.RawShaderMaterial({
@@ -78,14 +73,15 @@ const multipleRectangles = (
     const color = new THREE.Vector4(
       Math.random(),
       Math.random(),
-      Math.random()
+      Math.random(),
+      1
     );
 
     const rectangle = createRectangle(
-      randomInt(300),
-      randomInt(300),
-      randomInt(300),
-      randomInt(300),
+      randomInt(exampleDimensions.width),
+      randomInt(exampleDimensions.height),
+      randomInt(exampleDimensions.width),
+      randomInt(exampleDimensions.height),
       color
     );
 

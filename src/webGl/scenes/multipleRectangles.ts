@@ -1,3 +1,4 @@
+import { exampleDimensions } from "@/constants";
 import { randomInt } from "@/helpers";
 import { createShader, createProgram } from "@webGl/helpers";
 
@@ -112,10 +113,10 @@ const multipleRectangles = (
     // its the last thing we bound on the ARRAY_BUFFER bind point
     setRectangle(
       gl,
-      randomInt(300),
-      randomInt(300),
-      randomInt(300),
-      randomInt(300)
+      randomInt(exampleDimensions.width),
+      randomInt(exampleDimensions.height),
+      randomInt(exampleDimensions.width),
+      randomInt(exampleDimensions.height)
     );
 
     // Set a random color.
