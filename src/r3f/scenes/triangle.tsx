@@ -3,8 +3,12 @@ import * as THREE from "three";
 
 import { sceneSetup } from "@/constants";
 import { insertEveryNth } from "@/helpers";
+import { SceneProps } from "@/types";
 
-const triangle: React.FC = () => {
+const triangle: React.FC<SceneProps> = ({
+  vertexShaderSource,
+  fragmentShaderSource,
+}) => {
   const positions = new Float32Array(
     insertEveryNth(sceneSetup["triangle"].vertices, 2, 0)
   );
@@ -20,8 +24,8 @@ const triangle: React.FC = () => {
         />
       </bufferGeometry>
       <rawShaderMaterial
-        vertexShader={sceneSetup["triangle"].vert}
-        fragmentShader={sceneSetup["triangle"].frag}
+        vertexShader={vertexShaderSource}
+        fragmentShader={fragmentShaderSource}
         side={THREE.DoubleSide}
       />
     </mesh>

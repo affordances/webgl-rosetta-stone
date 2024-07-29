@@ -3,7 +3,12 @@ import * as THREE from "three";
 import { exampleDimensions, sceneSetup } from "@/constants";
 import { insertEveryNth } from "@/helpers";
 
-const triangle = (scene: THREE.Scene, renderer: THREE.WebGLRenderer) => {
+const triangle = (
+  scene: THREE.Scene,
+  renderer: THREE.WebGLRenderer,
+  vertexShaderSource: string,
+  fragmentShaderSource: string
+) => {
   const camera = new THREE.PerspectiveCamera(
     75,
     window.innerWidth / window.innerHeight,
@@ -22,8 +27,8 @@ const triangle = (scene: THREE.Scene, renderer: THREE.WebGLRenderer) => {
   geometry.setAttribute("position", new THREE.BufferAttribute(positions, 3));
 
   const material = new THREE.RawShaderMaterial({
-    vertexShader: sceneSetup["triangle"].vert,
-    fragmentShader: sceneSetup["triangle"].frag,
+    vertexShader: vertexShaderSource,
+    fragmentShader: fragmentShaderSource,
     // so it's not necessary to flip the first and second position coords
     side: THREE.DoubleSide,
   });

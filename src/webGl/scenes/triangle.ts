@@ -1,17 +1,17 @@
 import { sceneSetup } from "@/constants";
 import { createProgram, createShader } from "@webGl/helpers";
 
-const triangle = (gl: WebGLRenderingContext) => {
+const triangle = (
+  gl: WebGLRenderingContext,
+  vertexShaderSource: string,
+  fragmentShaderSource: string
+) => {
   // create GLSL shaders, upload the GLSL source, compile the shaders
-  const vertexShader = createShader(
-    gl,
-    gl.VERTEX_SHADER,
-    sceneSetup["triangle"].vert
-  );
+  const vertexShader = createShader(gl, gl.VERTEX_SHADER, vertexShaderSource);
   const fragmentShader = createShader(
     gl,
     gl.FRAGMENT_SHADER,
-    sceneSetup["triangle"].frag
+    fragmentShaderSource
   );
 
   if (!vertexShader || !fragmentShader) {

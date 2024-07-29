@@ -1,8 +1,13 @@
 import { loadModule } from "@/helpers";
 import sceneModules from "@webGl/scenes";
 import { resizePixelRatio } from "@webGl/helpers";
+import { SceneProps } from "@/types";
 
-export function createWebGLScene(scene: string) {
+export function createWebGLScene({
+  scene,
+  vertexShaderSource,
+  fragmentShaderSource,
+}: SceneProps) {
   const canvas = document.createElement("canvas");
 
   resizePixelRatio(canvas);
@@ -18,7 +23,7 @@ export function createWebGLScene(scene: string) {
     gl = canvas.getContext("webgl");
 
     if (gl) {
-      sceneModule.default(gl);
+      sceneModule.default(gl, vertexShaderSource, fragmentShaderSource);
     }
   };
 

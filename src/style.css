@@ -5,24 +5,25 @@ body {
   padding: 0;
 }
 
-.app-wrapper {
+#app-wrapper {
   display: flex;
   align-items: center;
   flex-direction: column;
   height: 100vh;
-  margin-top: 88px;
   width: 100vw;
 
-  h1 {
-    margin: 0 0 32px 0;
-  }
-
   #app {
+    align-items: center;
     display: flex;
     flex-direction: column;
     gap: 16px;
+    margin-top: 88px;
     /* the "real" width */
     width: 704px;
+
+    h1 {
+      margin: 0 0 32px 0;
+    }
 
     .scene-select-container {
       align-items: center;

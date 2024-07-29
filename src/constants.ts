@@ -8,19 +8,5 @@ export const exampleDimensions = {
 export const sceneSetup = {
   triangle: {
     vertices: [0, 0, 0, 0.5, 0.7, 0],
-    vert: `
-  attribute vec4 position;
-
-  void main() {
-    gl_Position = position;
-  }
-`,
-    frag: `
-  precision mediump float;
-
-  void main() {
-    gl_FragColor = vec4(1.0, 0.0, 0.5, 1.0);
-  }
-`,
   },
 };

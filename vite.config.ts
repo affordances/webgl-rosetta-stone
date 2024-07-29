@@ -6,6 +6,7 @@ export default defineConfig({
   resolve: {
     alias: {
       "@": "/src",
+      "@shaders": "/src/shaders",
       "@state": "/src/state",
       "@components": "/src/components",
       "@r3f": "/src/r3f",

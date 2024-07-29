@@ -3,30 +3,49 @@ import { createRoot, Root } from "react-dom/client";
 import { Canvas } from "@react-three/fiber";
 
 import sceneModules from "@r3f/scenes";
+import { SceneProps } from "@/types";
 
 type R3FWrapperProps = {
   scene: string;
-};
+} & SceneProps;
 
 let root: Root | null = null;
 
-const R3FWrapper: React.FC<R3FWrapperProps> = ({ scene }) => {
+const R3FWrapper: React.FC<R3FWrapperProps> = ({
+  scene,
+  vertexShaderSource,
+  fragmentShaderSource,
+}) => {
   const Scene = React.lazy(sceneModules[scene]);
 
   return (
     <Canvas frameloop="demand">
       <Suspense fallback={null}>
-        <Scene />
+        <Scene
+          vertexShaderSource={vertexShaderSource}
+          fragmentShaderSource={fragmentShaderSource}
+        />
       </Suspense>
     </Canvas>
   );
 };
 
-export function renderR3FScene(scene: string, container: HTMLElement) {
+export function renderR3FScene(
+  scene: string,
+  container: HTMLElement,
+  vertexShaderSource: string,
+  fragmentShaderSource: string
+) {
   if (!root) {
     root = createRoot(container);
   }
-  root.render(<R3FWrapper scene={scene} />);
+  root.render(
+    <R3FWrapper
+      scene={scene}
+      vertexShaderSource={vertexShaderSource}
+      fragmentShaderSource={fragmentShaderSource}
+    />
+  );
 }
 
 export function unmountR3FScene() {

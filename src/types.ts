@@ -7,3 +7,9 @@ export type SceneModule = () => Promise<any>;
 export type SceneModules = Record<string, SceneModule>;
 
 export type TabType = "webgl" | "threejs" | "r3f";
+
+export type SceneProps = {
+  scene: string;
+  vertexShaderSource: string;
+  fragmentShaderSource: string;
+};

@@ -2,8 +2,13 @@ import * as THREE from "three";
 
 import sceneModules from "@threeJs/scenes";
 import { loadModule } from "@/helpers";
+import { SceneProps } from "@/types";
 
-export function createThreeJSScene(scene: string) {
+export function createThreeJSScene({
+  scene,
+  vertexShaderSource,
+  fragmentShaderSource,
+}: SceneProps) {
   const canvas = document.createElement("canvas");
   canvas.id = "threejs-canvas";
 
@@ -19,7 +24,12 @@ export function createThreeJSScene(scene: string) {
     });
     threeScene = new THREE.Scene();
 
-    sceneModule.default(threeScene, renderer);
+    sceneModule.default(
+      threeScene,
+      renderer,
+      vertexShaderSource,
+      fragmentShaderSource
+    );
   };
 
   const dispose = () => {

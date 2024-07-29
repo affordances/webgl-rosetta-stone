@@ -25,6 +25,7 @@
     "baseUrl": "./src",
     "paths": {
       "@/*": ["*"],
+      "@shaders/*": ["shaders/*"],
       "@state/*": ["state/*"],
       "@components/*": ["components/*"],
       "@r3f/*": ["r3f/*"],

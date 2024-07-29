@@ -8,6 +8,9 @@ export function initializeApp() {
   const app = document.getElementById("app");
   if (!app) return;
 
+  const header = document.createElement("h1");
+  header.innerText = "webgl rosetta stone";
+
   const sceneManager = new SceneManager();
 
   const sceneSelector = createSceneSelector((scene) => {
@@ -31,6 +34,7 @@ export function initializeApp() {
   tabContainer.appendChild(threejsTab);
   tabContainer.appendChild(r3fTab);
 
+  app.appendChild(header);
   app.appendChild(sceneSelector);
   app.appendChild(tabContainer);
 
