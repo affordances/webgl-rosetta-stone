@@ -1,3 +1,5 @@
+import * as THREE from "three";
+
 import { sceneSetup } from "@/constants";
 import { createProgram, createShader } from "@webGl/helpers";
 
@@ -130,6 +132,41 @@ const varyingTriangle = (
       stride,
       offset
     );
+
+    // Compute the matrix using THREE.Matrix4
+    var projectionMatrix = new THREE.Matrix4().makeOrthographic(
+      0,
+      gl.canvas.width,
+      gl.canvas.height,
+      0,
+      -1,
+      1
+    );
+
+    var translationMatrix = new THREE.Matrix4().makeTranslation(
+      translation[0],
+      translation[1],
+      0
+    );
+
+    var rotationMatrix = new THREE.Matrix4().makeRotationZ(angleInRadians);
+
+    var scalingMatrix = new THREE.Matrix4().makeScale(scale[0], scale[1], 1);
+
+    // Combine matrices in the order: projection * translation * rotation * scaling
+    var combinedMatrix = new THREE.Matrix4();
+    combinedMatrix.multiplyMatrices(projectionMatrix, translationMatrix);
+    combinedMatrix.multiply(rotationMatrix);
+    combinedMatrix.multiply(scalingMatrix);
+
+    // Convert the Matrix4 to a 3x3 Float32Array
+    var matrix3 = new THREE.Matrix3().setFromMatrix4(combinedMatrix);
+    var matrixArray = matrix3.toArray();
+
+    console.log(matrixArray);
+
+    // Set the matrix uniform
+    gl.uniformMatrix3fv(matrixLocation, false, matrixArray);
 
     // Compute the matrix
     // var matrix = m3.projection(gl.canvas.width, gl.canvas.height);
