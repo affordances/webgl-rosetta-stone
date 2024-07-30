@@ -28,3 +28,11 @@ export const insertEveryNth = <T>(
 export const randomInt = (range: number) => {
   return Math.floor(Math.random() * range);
 };
+
+export const getRandomRGBAColor = () => {
+  const red = Math.floor(Math.random() * 256); // Red: 0 to 255
+  const green = Math.floor(Math.random() * 256); // Green: 0 to 255
+  const blue = Math.floor(Math.random() * 256); // Blue: 0 to 255
+
+  return `rgba(${red}, ${green}, ${blue}, 1)`;
+};

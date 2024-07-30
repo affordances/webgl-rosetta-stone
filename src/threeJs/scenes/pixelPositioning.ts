@@ -9,21 +9,22 @@ const pixelPositioning = (
   vertexShaderSource: string,
   fragmentShaderSource: string
 ) => {
-  const camera = new THREE.PerspectiveCamera(
-    75,
-    window.innerWidth / window.innerHeight,
-    0.1,
-    1000
-  );
-
   const dpr = window.devicePixelRatio;
   const width = exampleDimensions.width;
   const height = exampleDimensions.height;
 
+  const camera = new THREE.OrthographicCamera(
+    width / -2,
+    width / 2,
+    height / 2,
+    height / -2,
+    1,
+    1000
+  );
+
   renderer.setSize(width * dpr, height * dpr, false);
   renderer.domElement.style.width = `${width}px`;
   renderer.domElement.style.height = `${height}px`;
-  renderer.setPixelRatio(dpr);
 
   const positions = new Float32Array(
     insertEveryNth(sceneSetup["pixelPositioning"].vertices, 2, 0)
@@ -46,12 +47,7 @@ const pixelPositioning = (
   const mesh = new THREE.Mesh(geometry, material);
   scene.add(mesh);
 
-  const animate = () => {
-    requestAnimationFrame(animate);
-    renderer.render(scene, camera);
-  };
-
-  animate();
+  renderer.render(scene, camera);
 };
 
 export default pixelPositioning;

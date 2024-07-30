@@ -1,99 +1,48 @@
 import * as THREE from "three";
 
+import { getRandomRGBAColor, randomInt } from "@/helpers";
 import { exampleDimensions } from "@/constants";
-import { insertEveryNth, randomInt } from "@/helpers";
 
 const multipleRectangles = (
   scene: THREE.Scene,
-  renderer: THREE.WebGLRenderer,
-  vertexShaderSource: string,
-  fragmentShaderSource: string
+  renderer: THREE.WebGLRenderer
 ) => {
-  const dpr = window.devicePixelRatio;
   const width = exampleDimensions.width;
   const height = exampleDimensions.height;
 
-  const camera = new THREE.OrthographicCamera(0, width / dpr, 0, height / dpr);
+  const camera = new THREE.OrthographicCamera(
+    width / -2,
+    width / 2,
+    height / 2,
+    height / -2,
+    1,
+    1000
+  );
 
-  renderer.setPixelRatio(dpr);
+  camera.position.z = 5;
+
   renderer.setSize(width, height);
-  renderer.domElement.style.width = `${width}px`;
-  renderer.domElement.style.height = `${height}px`;
-
-  function createRectangle(
-    x: number,
-    y: number,
-    width: number,
-    height: number,
-    color: THREE.Vector4
-  ) {
-    const positions = new Float32Array(
-      insertEveryNth(
-        [
-          x,
-          y,
-          x + width,
-          y,
-          x,
-          y + height,
-          x,
-          y + height,
-          x + width,
-          y,
-          x + width,
-          y + height,
-        ],
-        2,
-        0
-      )
-    );
-
-    const geometry = new THREE.BufferGeometry();
-    geometry.setAttribute("position", new THREE.BufferAttribute(positions, 3));
-
-    const material = new THREE.RawShaderMaterial({
-      vertexShader: vertexShaderSource,
-      fragmentShader: fragmentShaderSource,
-      uniforms: {
-        resolution: {
-          value: new THREE.Vector2(width * dpr, height * dpr),
-        },
-        color: {
-          value: color,
-        },
-      },
-      side: THREE.DoubleSide,
-    });
-
-    const mesh = new THREE.Mesh(geometry, material);
-    return mesh;
-  }
 
   for (let i = 0; i < 50; i++) {
-    const color = new THREE.Vector4(
-      Math.random(),
-      Math.random(),
-      Math.random(),
-      1
-    );
+    const w = randomInt(width / 2);
+    const h = randomInt(height / 2);
 
-    const rectangle = createRectangle(
-      randomInt(exampleDimensions.width),
-      randomInt(exampleDimensions.height),
-      randomInt(exampleDimensions.width),
-      randomInt(exampleDimensions.height),
-      color
-    );
+    const x = Math.random() * (width - w) - (width / 2 - w / 2);
+    const y = Math.random() * (height - h) - (height / 2 - h / 2);
+
+    const geometry = new THREE.PlaneGeometry(w, h);
+    const material = new THREE.MeshBasicMaterial({
+      color: getRandomRGBAColor(),
+    });
+
+    const rectangle = new THREE.Mesh(geometry, material);
+
+    rectangle.position.set(x, y, 0);
 
     scene.add(rectangle);
   }
 
-  const animate = () => {
-    requestAnimationFrame(animate);
-    renderer.render(scene, camera);
-  };
-
-  animate();
+  renderer.render(scene, camera);
 };
 
 export default multipleRectangles;

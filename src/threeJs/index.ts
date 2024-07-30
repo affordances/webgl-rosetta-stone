@@ -24,6 +24,8 @@ export function createThreeJSScene({
     });
     threeScene = new THREE.Scene();
 
+    renderer.setPixelRatio(window.devicePixelRatio);
+
     sceneModule.default(
       threeScene,
       renderer,

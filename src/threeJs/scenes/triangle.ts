@@ -17,7 +17,6 @@ const triangle = (
   );
 
   renderer.setSize(exampleDimensions.width, exampleDimensions.height);
-  renderer.setPixelRatio(window.devicePixelRatio);
 
   const positions = new Float32Array(
     insertEveryNth(sceneSetup["triangle"].vertices, 2, 0)
@@ -36,12 +35,7 @@ const triangle = (
   const mesh = new THREE.Mesh(geometry, material);
   scene.add(mesh);
 
-  const animate = () => {
-    requestAnimationFrame(animate);
-    renderer.render(scene, camera);
-  };
-
-  animate();
+  renderer.render(scene, camera);
 };
 
 export default triangle;
