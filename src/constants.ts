@@ -1,4 +1,9 @@
-export const scenes = ["triangle", "pixelPositioning", "multipleRectangles"];
+export const scenes = [
+  "triangle",
+  "pixelPositioning",
+  "multipleRectangles",
+  "varyingTriangle",
+];
 
 export const exampleDimensions = {
   height: 352,
@@ -11,5 +16,8 @@ export const sceneSetup = {
   },
   pixelPositioning: {
     vertices: [10, 20, 80, 20, 10, 30, 10, 30, 80, 20, 80, 30],
+  },
+  varyingTriangle: {
+    vertices: [0, -50, 75, 62.5, -87.5, 50],
   },
 };
